@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Takeaway Reality — AI, AR/VR & SaaS Development Company</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<style>
+/* ── TOKENS ──────────────────────────────────────────────────── */
+:root {
+  --bg:       #111008;
+  --surface:  #0a0900;
+  --card:     #1a1710;
+  --primary:  #ff6b35;
+  --secondary:#E5E5E5;
+  --white:    #FFFFFF;
+  --lime:     #ff6b35;
+
+  --text:     #FFFFFF;
+  --muted:    #c8c0a8;
+  --border:   rgba(255, 107, 53, 0.10);
+}
+
+/* ── RESET ───────────────────────────────────────────────────── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.65;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+img{display:block;max-width:100%}
+
+/* ── NOISE ───────────────────────────────────────────────────── */
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9000;opacity:.6}
+
+/* ── NAV ─────────────────────────────────────────────────────── */
+nav{position:fixed;top:0;left:0;right:0;z-index:800;padding:18px 52px;display:flex;align-items:center;justify-content:space-between;transition:background .4s,backdrop-filter .4s}
+nav.scrolled{background:rgba(6,6,15,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.25rem;color:var(--lime);letter-spacing:-.5px;display:flex;align-items:center;gap:6px;height:40px}
+.nav-logo-img{height:100%;width:auto;object-fit:contain;display:block}
+.nav-logo-dot{width:7px;height:7px;background:var(--lime);border-radius:50%;display:inline-block;animation:blink 2.2s infinite}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.75)}}
+.nav-links{display:flex;gap:34px}
+.nav-links a{font-size:.84rem;font-weight:500;color:var(--muted);letter-spacing:.01em;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--lime);color:#000;padding:9px 22px;border-radius:100px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.84rem;transition:transform .2s,box-shadow .25s}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(255,107,53,.28)}
+
+/* ── HERO ────────────────────────────────────────────────────── */
+#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 48px 100px;position:relative;overflow:hidden;background:#0d0800}
+#hero-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.hero-vignette{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse 75% 60% at 50% 50%,transparent 20%,rgba(13,8,0,.6) 100%),linear-gradient(to bottom,rgba(13,8,0,.25) 0%,transparent 15%,transparent 80%,rgba(13,8,0,.8) 100%);pointer-events:none}
+.hero-inner{position:relative;z-index:2;max-width:820px}
+
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,107,53,.09);border:1px solid rgba(255,107,53,.22);color:var(--lime);font-size:.75rem;font-weight:500;letter-spacing:.13em;text-transform:uppercase;padding:6px 16px;border-radius:100px;margin-bottom:30px;opacity:0}
+.hero-badge-dot{width:5px;height:5px;background:var(--lime);border-radius:50%;animation:blink 2s infinite}
+
+.hero-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.8rem,6.5vw,5.2rem);font-weight:700;line-height:1.04;letter-spacing:-.03em;margin-bottom:24px;opacity:0}
+.hero-h1 span{background:linear-gradient(130deg,#ff6b35 0%,#ff8c42 45%,#ff5722 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.hero-sub{color:var(--muted);font-size:1.05rem;max-width:520px;margin:0 auto 42px;line-height:1.75;opacity:0}
+
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;opacity:0}
+.btn-lime{background:var(--lime);color:#000;padding:13px 30px;border-radius:100px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.92rem;display:inline-flex;align-items:center;gap:7px;transition:transform .2s,box-shadow .25s;position:relative;overflow:hidden}
+.btn-lime::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.25),transparent);opacity:0;transition:opacity .3s}
+.btn-lime:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(255,107,53,.32)}
+.btn-lime:hover::after{opacity:1}
+.btn-ghost{color:var(--text);padding:13px 30px;border-radius:100px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.92rem;border:1px solid var(--border);display:inline-flex;align-items:center;gap:7px;transition:border-color .2s,background .2s}
+.btn-ghost:hover{border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.04)}
+
+/* client logos strip */
+.hero-clients{position:absolute;bottom:0;left:0;right:0;z-index:2;padding:22px 52px;border-top:1px solid var(--border);background:linear-gradient(to top,rgba(13,8,0,.7),transparent);display:flex;align-items:center;gap:12px}
+.hero-clients-label{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);white-space:nowrap;margin-right:8px}
+.clients-scroll{display:flex;gap:48px;overflow:hidden;flex:1}
+.clients-track{display:flex;gap:48px;animation:clientsScroll 22s linear infinite;white-space:nowrap}
+.client-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.82rem;color:rgba(255,255,255,.2);letter-spacing:.06em;text-transform:uppercase;transition:color .3s}
+.client-name:hover{color:rgba(255,255,255,.5)}
+@keyframes clientsScroll{to{transform:translateX(-50%)}}
+
+/* scroll line */
+.scroll-hint{position:absolute;bottom:80px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:7px;color:var(--muted);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;opacity:0}
+.scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,rgba(255,107,53,.5),transparent);animation:lineDown 1.8s ease-in-out infinite}
+@keyframes lineDown{0%,100%{transform:scaleY(1);opacity:1}50%{transform:scaleY(.3);opacity:.3}}
+
+/* ── MARQUEE ─────────────────────────────────────────────────── */
+.marquee-wrap{overflow:hidden;background:var(--lime);padding:0}
+.marquee-track{display:flex;width:max-content;animation:marquee 28s linear infinite}
+.marquee-item{padding:14px 44px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;color:#000;white-space:nowrap;display:flex;align-items:center;gap:22px}
+.marquee-item::after{content:'·';opacity:.35;font-size:1.4rem}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* ── SHARED SECTION ──────────────────────────────────────────── */
+section{padding:110px 52px;position:relative;overflow:hidden}
+.sec-label{font-size:.73rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.sec-label::before{content:'';width:20px;height:1px;background:var(--muted)}
+.sec-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.9rem,3.5vw,3rem);font-weight:700;line-height:1.08;letter-spacing:-.025em;margin-bottom:16px}
+.hl{color:var(--lime)}
+.inner{max-width:1200px;margin:0 auto}
+
+/* ── SERVICES ────────────────────────────────────────────────── */
+#services{background:var(--surface)}
+.svc-head{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end;margin-bottom:64px}
+.svc-desc{color:var(--muted);font-size:.95rem;line-height:1.75}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.svc-card{background:var(--card);border:1px solid var(--border);padding:40px 32px;position:relative;overflow:hidden;transition:background .3s}
+.svc-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,107,53,.07),transparent);opacity:0;transition:opacity .4s}
+.svc-card:hover{background:#1e1608}
+.svc-card:hover::before{opacity:1}
+.svc-ico{width:64px;height:64px;border-radius:18px;display:flex;align-items:center;justify-content:center;margin-bottom:26px;position:relative}
+.ico-a{background:linear-gradient(135deg,#2a1000,#5c2200);box-shadow:0 0 28px rgba(255,107,53,.25)}
+.ico-b{background:linear-gradient(135deg,#2a1200,#5c2800);box-shadow:0 0 28px rgba(255,140,66,.15)}
+.ico-c{background:linear-gradient(135deg,#2a0800,#5c1800);box-shadow:0 0 28px rgba(255,87,34,.25)}
+.ico-d{background:linear-gradient(135deg,#2a1000,#5c2200);box-shadow:0 0 28px rgba(255,107,53,.15)}
+.ico-e{background:linear-gradient(135deg,#2a1200,#5c2800);box-shadow:0 0 28px rgba(255,140,66,.15)}
+.ico-f{background:linear-gradient(135deg,#2a1400,#5c3000);box-shadow:0 0 28px rgba(255,152,77,.2)}
+
+/* SVG shapes */
+.svc-ico svg{width:36px;height:36px}
+.svc-n{position:absolute;top:24px;right:24px;font-family:'Space Grotesk',sans-serif;font-size:3rem;font-weight:700;color:rgba(255,255,255,.025);line-height:1;pointer-events:none}
+.svc-name{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:12px;letter-spacing:-.01em}
+.svc-text{color:var(--muted);font-size:.88rem;line-height:1.7}
+.svc-link{display:inline-flex;align-items:center;gap:5px;margin-top:18px;font-size:.8rem;font-weight:600;color:var(--lime);opacity:0;transform:translateY(4px);transition:opacity .3s,transform .3s}
+.svc-card:hover .svc-link{opacity:1;transform:translateY(0)}
+.svc-grid-2{margin-top:2px;display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+
+/* ── WHAT WE WORK ON ─────────────────────────────────────────── */
+#what{background:var(--bg)}
+.what-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.what-left{background:var(--surface);border:1px solid var(--border);padding:60px 52px;position:relative;overflow:hidden}
+.what-left::before{content:'';position:absolute;bottom:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,53,.10),transparent);pointer-events:none}
+.what-items{margin-top:32px;display:flex;flex-direction:column;gap:0}
+.what-item{display:flex;align-items:flex-start;gap:14px;padding:18px 0;border-bottom:1px solid var(--border)}
+.what-item:last-child{border-bottom:none}
+.what-dot{width:6px;height:6px;background:var(--lime);border-radius:50%;margin-top:9px;flex-shrink:0}
+.what-text{color:var(--muted);font-size:.92rem;line-height:1.6}
+
+.what-right{display:grid;grid-template-rows:1fr 1fr;gap:3px}
+.stat-card{background:var(--surface);border:1px solid var(--border);padding:52px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;overflow:hidden;position:relative}
+.stat-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,107,53,.04),transparent);pointer-events:none}
+.stat-num-big{font-family:'Space Grotesk',sans-serif;font-size:clamp(3rem,5vw,5rem);font-weight:700;letter-spacing:-.04em;line-height:1;background:linear-gradient(135deg,#ff6b35,#ff8c42);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-meta{text-align:right}
+.stat-label{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;margin-bottom:6px}
+.stat-sub{color:var(--muted);font-size:.82rem;line-height:1.5;max-width:160px;margin-left:auto}
+.stat-card-row{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+
+/* ── PROJECTS ────────────────────────────────────────────────── */
+#projects{background:var(--bg)}
+.proj-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:52px}
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.proj-card{position:relative;overflow:hidden;background:var(--card);cursor:pointer;aspect-ratio:16/10}
+.proj-card.tall{grid-row:span 2;aspect-ratio:auto}
+.proj-bg{position:absolute;inset:0;transition:transform .75s cubic-bezier(.23,1,.32,1)}
+.proj-img{width:100%;height:100%;object-fit:cover;object-position:center}
+.proj-bg-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.3) 50%,rgba(0,0,0,.1) 100%);z-index:1}
+.proj-card:hover .proj-bg{transform:scale(1.07)}
+.bg-1{background:linear-gradient(145deg,#0d0830 0%,#1a1050 40%,#0a1535 100%)}
+.bg-2{background:linear-gradient(145deg,#1a0505 0%,#300808 60%,#0f0303 100%)}
+.bg-3{background:linear-gradient(145deg,#08150a 0%,#0e2410 100%)}
+.bg-4{background:linear-gradient(145deg,#0a0a1a 0%,#141430 100%)}
+.proj-label-art{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:700;letter-spacing:-.04em;color:rgba(255,255,255,.07);text-align:center;padding:20px;line-height:1.1;user-select:none;z-index:2}
+.proj-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.1) 55%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:28px;transition:opacity .3s;z-index:3}
+.proj-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.proj-tag{padding:3px 10px;border-radius:100px;font-size:.7rem;font-weight:500;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);backdrop-filter:blur(6px)}
+.proj-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.25rem;letter-spacing:-.02em;line-height:1.15;color:#fff}
+.proj-type{font-size:.78rem;color:var(--muted);margin-top:4px}
+.proj-arrow{position:absolute;top:20px;right:20px;width:34px;height:34px;border:1px solid rgba(255,255,255,.18);border-radius:50%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5);font-size:.85rem;opacity:0;transform:translate(6px,-6px);transition:opacity .35s,transform .35s;z-index:4}
+.proj-card:hover .proj-arrow{opacity:1;transform:translate(0,0)}
+.proj-more{margin-top:3px;background:var(--surface);border:1px solid var(--border);padding:28px 36px;display:flex;align-items:center;justify-content:space-between}
+.proj-more-txt{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem}
+.proj-more-sub{color:var(--muted);font-size:.88rem;margin-top:4px}
+
+/* ── ABOUT / PROCESS ─────────────────────────────────────────── */
+#about{background:var(--surface)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.process-steps{margin-top:36px;display:flex;flex-direction:column}
+.ps{display:flex;gap:18px;padding:22px 0;border-bottom:1px solid var(--border);position:relative}
+.ps:last-child{border-bottom:none}
+.ps-num{font-family:'Space Grotesk',sans-serif;font-size:.7rem;font-weight:700;color:var(--lime);letter-spacing:.1em;min-width:28px;padding-top:2px}
+.ps-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:5px}
+.ps-desc{color:var(--muted);font-size:.87rem;line-height:1.6}
+.ps-bar{position:absolute;left:0;bottom:0;height:1px;width:0;background:linear-gradient(90deg,var(--lime),#ff5722);transition:width .6s ease}
+.ps:hover .ps-bar{width:100%}
+
+.caps-card{background:linear-gradient(135deg,#1a0800,#0f0400);border:1px solid rgba(255,107,53,.2);border-radius:16px;padding:40px;margin-bottom:20px;position:relative;overflow:hidden}
+.caps-card::before{content:'';position:absolute;top:-60%;left:-60%;width:220%;height:220%;background:conic-gradient(from 0deg,transparent 55%,rgba(255,107,53,.07) 68%,transparent 78%);animation:spinSlow 20s linear infinite}
+@keyframes spinSlow{to{transform:rotate(360deg)}}
+.new-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,107,53,.1);border:1px solid rgba(255,107,53,.28);color:var(--lime);font-size:.7rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;padding:4px 12px;border-radius:100px;margin-bottom:20px;position:relative}
+.new-dot{width:5px;height:5px;background:var(--lime);border-radius:50%;animation:blink 2s infinite}
+.caps-title{font-family:'Space Grotesk',sans-serif;font-size:1.35rem;font-weight:700;margin-bottom:14px;position:relative;letter-spacing:-.02em}
+.caps-sub{color:var(--muted);font-size:.88rem;line-height:1.65;position:relative;margin-bottom:18px}
+.caps-list{list-style:none;display:flex;flex-direction:column;gap:9px;position:relative}
+.caps-list li{display:flex;gap:10px;align-items:flex-start;color:var(--muted);font-size:.88rem;line-height:1.5}
+.caps-list li::before{content:'';width:5px;height:5px;background:var(--lime);border-radius:50%;margin-top:8px;flex-shrink:0}
+
+.awards-row{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-top:20px}
+.award-box{background:var(--card);border:1px solid var(--border);padding:22px 20px}
+.award-rank{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:700;letter-spacing:-.03em;background:linear-gradient(135deg,#ff6b35,#ff8c42);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:5px}
+.award-name{font-size:.8rem;color:var(--muted);line-height:1.35}
+
+/* ── HOW WE WORK ─────────────────────────────────────────────── */
+#process{background:var(--bg)}
+.process-head{text-align:center;margin-bottom:72px}
+.process-head .sec-label{justify-content:center}
+.process-head .sec-label::before{display:none}
+.process-head .sec-label::after{content:'';display:block;width:20px;height:1px;background:var(--muted)}
+.hw-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.hw{background:var(--surface);border:1px solid var(--border);padding:32px 26px;position:relative;overflow:hidden;transition:background .3s,border-color .3s}
+.hw:hover{background:var(--card);border-color:rgba(123,47,255,.2)}
+.hw-n{font-family:'Space Grotesk',sans-serif;font-size:.7rem;font-weight:700;color:var(--lime);letter-spacing:.1em;margin-bottom:14px}
+.hw-icon{width:38px;height:38px;border-radius:10px;background:rgba(123,47,255,.12);border:1px solid rgba(123,47,255,.18);display:flex;align-items:center;justify-content:center;font-size:1rem;margin-bottom:18px;transition:background .3s}
+.hw-icon svg{width:20px;height:20px;stroke:currentColor;color:var(--lime)}
+.hw:hover .hw-icon{background:rgba(123,47,255,.22)}
+.hw-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:10px}
+.hw-text{color:var(--muted);font-size:.84rem;line-height:1.65}
+.hw-underline{position:absolute;bottom:0;left:0;width:0;height:2px;background:linear-gradient(90deg,var(--lime),var(--purple));transition:width .45s ease}
+.hw:hover .hw-underline{width:100%}
+.hw-grid-2{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:2px}
+
+/* ── TESTIMONIALS ────────────────────────────────────────────── */
+#testimonials{background:var(--surface);padding:110px 52px}
+.testi-head{text-align:center;margin-bottom:64px}
+.testi-head .sec-label{justify-content:center}
+.testi-head .sec-label::before{display:none}
+.testi-head .sec-label::after{content:'';display:block;width:20px;height:1px;background:var(--muted)}
+.testi-track-wrap{overflow:hidden;position:relative}
+.testi-track-wrap::before,.testi-track-wrap::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none}
+.testi-track-wrap::before{left:0;background:linear-gradient(to right,var(--surface),transparent)}
+.testi-track-wrap::after{right:0;background:linear-gradient(to left,var(--surface),transparent)}
+.testi-track{display:flex;gap:16px;animation:testiScroll 40s linear infinite;width:max-content}
+.testi-track:hover{animation-play-state:paused}
+.testi-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:32px 28px;width:320px;flex-shrink:0;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+.testi-card:hover{border-color:rgba(123,47,255,.25);transform:translateY(-4px)}
+.testi-card::before{content:'\201C';position:absolute;top:16px;right:24px;font-size:4rem;font-family:'Space Grotesk',sans-serif;font-weight:700;color:rgba(255,255,255,.04);line-height:1}
+.testi-quote{color:var(--muted);font-size:.88rem;line-height:1.7;margin-bottom:20px;position:relative}
+.testi-author{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.9rem;margin-bottom:2px}
+.testi-role{color:var(--muted);font-size:.78rem}
+.testi-stars{display:flex;gap:3px;margin-bottom:14px}
+.star{width:12px;height:12px;background:var(--lime);border-radius:2px;clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+@keyframes testiScroll{to{transform:translateX(-50%)}}
+
+/* ── AWARDS STRIP ────────────────────────────────────────────── */
+#awards{background:var(--bg);padding:80px 52px}
+.awards-inner{max-width:1200px;margin:0 auto}
+.awards-label{text-align:center;margin-bottom:48px}
+.awards-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:2px}
+.award-pill{background:var(--surface);border:1px solid var(--border);padding:28px 20px;text-align:center;transition:border-color .3s,background .3s}
+.award-pill:hover{border-color:rgba(255,107,53,.18);background:var(--card)}
+.award-pill-rank{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:700;background:linear-gradient(135deg,#ff6b35,#ff8c42);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:6px}
+.award-pill-name{color:var(--muted);font-size:.75rem;line-height:1.4}
+.award-pill-src{font-family:'Space Grotesk',sans-serif;font-size:.7rem;font-weight:700;color:rgba(255,255,255,.3);margin-top:8px;text-transform:uppercase;letter-spacing:.06em}
+
+/* ── FAQ ─────────────────────────────────────────────────────── */
+#faq{background:var(--surface)}
+.faq-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:80px;align-items:start}
+.faq-left .sec-title{margin-bottom:24px}
+.faq-cta-text{color:var(--muted);font-size:.92rem;line-height:1.7;margin-bottom:28px}
+.faq-items{display:flex;flex-direction:column;gap:2px}
+.faq-item{background:var(--card);border:1px solid var(--border);overflow:hidden}
+.faq-q{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.95rem;padding:22px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:background .2s}
+.faq-q:hover{background:#14143a}
+.faq-q .faq-icon{width:22px;height:22px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--muted);flex-shrink:0;transition:transform .3s,background .3s,border-color .3s}
+.faq-item.open .faq-icon{transform:rotate(45deg);background:var(--lime);border-color:var(--lime);color:#000}
+.faq-a{color:var(--muted);font-size:.88rem;line-height:1.7;padding:0 24px;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s}
+.faq-item.open .faq-a{max-height:300px;padding:0 24px 22px}
+
+/* ── CONTACT ─────────────────────────────────────────────────── */
+#contact{padding:0;display:flex}
+.contact-wrap{flex:1;background:linear-gradient(140deg,#1600a0 0%,#5500cc 35%,#8b00ff 65%,#a855f7 100%);display:flex;align-items:center;justify-content:center;text-align:center;padding:110px 52px;position:relative;overflow:hidden;min-height:56vh}
+.contact-wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 105%,rgba(0,0,0,.55),transparent)}
+/* rings */
+.c-ring{position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.07);top:50%;left:50%;transform:translate(-50%,-50%)}
+.c-ring-1{width:500px;height:500px}
+.c-ring-2{width:800px;height:800px;border-color:rgba(255,255,255,.04)}
+.c-ring-3{width:1100px;height:1100px;border-color:rgba(255,255,255,.025);animation:spinSlow 60s linear infinite}
+.contact-inner{position:relative;z-index:2;max-width:600px;width:100%}
+.contact-h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.4rem,5.5vw,4.5rem);font-weight:700;letter-spacing:-.03em;line-height:1.05;color:#fff;margin-bottom:18px}
+.contact-sub{color:rgba(255,255,255,.6);font-size:.98rem;max-width:420px;margin:0 auto 36px;line-height:1.7}
+.btn-contact{background:var(--lime);color:#000;padding:15px 38px;border-radius:100px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.98rem;display:inline-flex;align-items:center;gap:8px;transition:transform .2s,box-shadow .3s}
+.btn-contact:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 18px 50px rgba(0,0,0,.45)}
+
+/* Contact Form */
+.contact-form{width:100%;max-width:500px;margin:0 auto;text-align:left}
+.form-group{margin-bottom:20px}
+.form-label{display:block;color:rgba(255,255,255,.9);font-size:.88rem;font-weight:600;margin-bottom:8px;font-family:'Space Grotesk',sans-serif}
+.form-input,.form-textarea{width:100%;padding:14px 18px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:10px;color:#fff;font-size:.92rem;font-family:'Inter',sans-serif;transition:border-color .3s,background .3s;backdrop-filter:blur(10px)}
+.form-input:focus,.form-textarea:focus{outline:none;border-color:var(--lime);background:rgba(255,255,255,.12)}
+.form-input::placeholder,.form-textarea::placeholder{color:rgba(255,255,255,.4)}
+.form-textarea{resize:vertical;min-height:120px}
+.form-submit{width:100%;background:var(--lime);color:#000;padding:15px 38px;border:none;border-radius:100px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.98rem;cursor:pointer;transition:transform .2s,box-shadow .3s}
+.form-submit:hover{transform:translateY(-3px);box-shadow:0 18px 50px rgba(0,0,0,.45)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* ── FOOTER ──────────────────────────────────────────────────── */
+footer{background:#020208;padding:72px 52px 40px;border-top:1px solid var(--border)}
+.footer-wrap{max-width:1200px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1.2fr;gap:56px;margin-bottom:60px}
+.f-brand{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:700;color:var(--lime);letter-spacing:-.5px;margin-bottom:14px}
+.f-tagline{color:var(--muted);font-size:.88rem;line-height:1.65;max-width:240px;margin-bottom:24px}
+.f-socials{display:flex;gap:8px}
+.f-social{width:34px;height:34px;border:1px solid var(--border);border-radius:7px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.68rem;transition:border-color .2s,color .2s,background .2s}
+.f-social:hover{border-color:var(--lime);color:var(--lime);background:rgba(255,107,53,.05)}
+.f-col-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:18px;color:var(--text)}
+.f-links{display:flex;flex-direction:column;gap:11px}
+.f-links a{color:var(--muted);font-size:.88rem;display:flex;align-items:center;gap:5px;transition:color .2s}
+.f-links a::before{content:'—';font-size:.65rem;opacity:.4}
+.f-links a:hover{color:var(--text)}
+.footer-bottom{border-top:1px solid var(--border);padding-top:26px;display:flex;align-items:center;justify-content:space-between}
+.f-copy{color:var(--muted);font-size:.8rem}
+.f-legal{display:flex;gap:22px}
+.f-legal a{color:var(--muted);font-size:.8rem;transition:color .2s}
+.f-legal a:hover{color:var(--text)}
+
+/* ── SCROLL REVEAL ───────────────────────────────────────────── */
+.rv{opacity:0;transform:translateY(42px)}
+.rv-l{opacity:0;transform:translateX(-42px)}
+.rv-s{opacity:0;transform:scale(.91)}
+
+/* ── SERVICE CARD — tilt + amber glow sweep ──────────────────── */
+.svc-card{transform-style:preserve-3d;transform:perspective(800px) rotateX(0deg) rotateY(0deg);transition:transform .15s ease,background .3s,box-shadow .3s}
+.svc-card:hover{box-shadow:0 24px 60px rgba(255,107,53,.12),0 0 0 1px rgba(255,107,53,.18)}
+/* animated border shimmer */
+.svc-card::after{content:'';position:absolute;inset:0;border-radius:0;background:linear-gradient(120deg,transparent 30%,rgba(255,107,53,.12) 50%,transparent 70%);background-size:200% 100%;opacity:0;transition:opacity .3s}
+.svc-card:hover::after{opacity:1;animation:shimmerSweep .8s ease forwards}
+@keyframes shimmerSweep{from{background-position:200% 0}to{background-position:-200% 0}}
+/* icon pulse on hover */
+.svc-card:hover .svc-ico{animation:iconPulse .5s ease}
+@keyframes iconPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+
+/* ── PROJECT CARD — parallax label + amber tag flash ────────── */
+.proj-card{transition:box-shadow .4s}
+.proj-card:hover{box-shadow:0 32px 80px rgba(0,0,0,.6),0 0 0 1px rgba(255,107,53,.15)}
+.proj-card:hover .proj-label-art{color:rgba(255,107,53,.06);transition:color .5s}
+.proj-card:hover .proj-tag{border-color:rgba(255,107,53,.3);color:rgba(255,180,130,.85);transition:border-color .3s,color .3s}
+
+/* ── PROCESS STEP — number highlight + left accent bar ──────── */
+.ps{transition:padding-left .3s}
+.ps:hover{padding-left:10px}
+.ps:hover .ps-num{color:#fff;text-shadow:0 0 18px rgba(255,107,53,.7);transition:color .3s,text-shadow .3s}
+.ps:hover .ps-name{color:var(--lime);transition:color .3s}
+
+/* ── HOW-WE-WORK CARD — icon spin + amber border ────────────── */
+.hw{transition:background .3s,border-color .3s,transform .25s}
+.hw:hover{transform:translateY(-4px);border-color:rgba(255,107,53,.3)}
+.hw:hover .hw-icon{transform:rotate(15deg) scale(1.1);background:rgba(255,107,53,.15);border-color:rgba(255,107,53,.3);transition:transform .35s cubic-bezier(.34,1.56,.64,1),background .3s,border-color .3s}
+.hw:hover .hw-icon svg{animation:iconDraw .8s ease forwards}
+@keyframes iconDraw{0%{stroke-dasharray:100;stroke-dashoffset:100}100%{stroke-dasharray:100;stroke-dashoffset:0}}
+.hw-underline{background:linear-gradient(90deg,var(--lime),#ff5722)}
+
+/* ── TESTIMONIAL CARD — quote mark glow + lift ───────────────── */
+.testi-card{transition:border-color .3s,transform .35s,box-shadow .35s}
+.testi-card:hover{border-color:rgba(255,107,53,.3);transform:translateY(-6px) scale(1.015);box-shadow:0 20px 50px rgba(0,0,0,.4),0 0 0 1px rgba(255,107,53,.12)}
+.testi-card:hover::before{color:rgba(255,107,53,.12);transition:color .4s}
+.testi-card:hover .testi-author{color:var(--lime);transition:color .3s}
+
+/* ── AWARD PILL — rank number glow + border flash ────────────── */
+.award-pill{transition:border-color .3s,background .3s,transform .25s}
+.award-pill:hover{border-color:rgba(255,107,53,.35);background:var(--card);transform:translateY(-3px)}
+.award-pill:hover .award-pill-rank{filter:drop-shadow(0 0 10px rgba(255,107,53,.5));transition:filter .3s}
+.award-pill:hover .award-pill-src{color:rgba(255,107,53,.6);transition:color .3s}
+
+/* ── FAQ ITEM — left border slide ───────────────────────────── */
+.faq-item{transition:border-color .3s}
+.faq-item:hover,.faq-item.open{border-left:2px solid var(--lime)}
+.faq-q:hover{background:#1a1508}
+
+/* ── STAT CARD — number glow ─────────────────────────────────── */
+.stat-card{transition:border-color .3s,box-shadow .3s}
+.stat-card:hover{border-color:rgba(255,107,53,.25);box-shadow:0 0 40px rgba(255,107,53,.06)}
+.stat-card:hover .stat-num-big{filter:drop-shadow(0 0 14px rgba(255,107,53,.4));transition:filter .3s}
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ──────────────────────────────────────────────────── -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">
+    <img src="logo 2.png" alt="" class="nav-logo-img">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#projects">Our Work</a></li>
+    <li><a href="#about">About us</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact">Blog</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Contact Us</a>
+</nav>
+
+<!-- ─── HERO ──────────────────────────────────────────────────── -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-vignette"></div>
+
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="hero-badge-dot"></span>Award-Winning Studio — Est. 2018</div>
+    <h1 class="hero-h1">Architecting AI amp;<br><span> AR/VR </span><br>& Scalable Games</h1>
+    <p class="hero-sub">We are a custom technology firm specializing in AR/VR development, XR ecosystems, AI & Metaverse integration, and Game Development. </p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-lime">Discuss your project &rarr;</a>
+      <a href="#projects" class="btn-ghost">View Projects</a>
+    </div>
+  </div>
+
+  
+</section>
+
+<!-- ─── MARQUEE ───────────────────────────────────────────────── -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item">AI Development</div>
+    <div class="marquee-item">AR Solutions</div>
+    <div class="marquee-item">VR Solutions</div>
+    <div class="marquee-item">Game Development</div>
+    <div class="marquee-item">XR Solutions</div>
+    <div class="marquee-item">Metaverse</div>
+    <div class="marquee-item">AI Development</div>
+    <div class="marquee-item">AR Solutions</div>
+    <div class="marquee-item">VR Solutions</div>
+    <div class="marquee-item">Game Development</div>
+    <div class="marquee-item">XR Solutions</div>
+    <div class="marquee-item">Metaverse</div>
+  </div>
+</div>
+
+<!-- ─── SERVICES ──────────────────────────────────────────────── -->
+<section id="services">
+  <div class="inner">
+    <div class="svc-head">
+      <div>
+        <div class="sec-label rv">Our Services</div>
+        <h2 class="sec-title rv">Advanced Systems<br><span class="hl">Engineering</span></h2>
+      </div>
+      <p class="svc-desc rv">At Infinity, we eliminate systemic friction by deploying high-performance architectures across the full spectrum of immersive and intelligent technologies. Our engineering focus remains fixed on constructing resilient, production-ready applications that solve complex industrial challenges and enforce digital dominance.</p>
+    </div>
+    <div class="svc-grid">
+      <!-- card 1 -->
+      <div class="svc-card rv">
+        <div class="svc-n">01</div>
+        <div class="svc-ico ico-a">
+          <svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="8" fill="#a855f7" opacity=".9"/><circle cx="7" cy="13" r="6" fill="#7c3aed" opacity=".7"/><circle cx="29" cy="13" r="6" fill="#7c3aed" opacity=".7"/><circle cx="7" cy="24" r="6" fill="#6d28d9" opacity=".55"/><circle cx="29" cy="24" r="6" fill="#6d28d9" opacity=".55"/></svg>
+        </div>
+        <h3 class="svc-name">Custom Software Development</h3>
+        <p class="svc-text">Tailored web and platform systems built around your business requirements. Web applications, internal systems, system integrations.</p>
+        <span class="svc-link">Learn more &rarr;</span>
+      </div>
+      <!-- card 2 -->
+      <div class="svc-card rv">
+        <div class="svc-n">02</div>
+        <div class="svc-ico ico-b">
+          <svg viewBox="0 0 36 36" fill="none"><polygon points="18,3 33,30 3,30" fill="#4ade80" opacity=".85"/><polygon points="18,11 28,30 8,30" fill="#86efac" opacity=".5"/></svg>
+        </div>
+        <h3 class="svc-name">AI & Metaverse</h3>
+        <p class="svc-text">We bridge the gap between static data and autonomous action by embedding sophisticated machine learning models into persistent digital ecosystems. Our team develops context-aware AI agents and metaverse frameworks that automate legacy workflows and facilitate global collaboration within a secure, decentralized architecture.</p>
+        <span class="svc-link">Learn more &rarr;</span>
+      </div>
+      <!-- card 3 -->
+      <div class="svc-card rv">
+        <div class="svc-n">03</div>
+        <div class="svc-ico ico-c">
+          <svg viewBox="0 0 36 36" fill="none"><polygon points="18,3 33,15 28,32 8,32 3,15" fill="#c084fc" opacity=".85"/><polygon points="18,10 27,18 24,30 12,30 9,18" fill="#e9d5ff" opacity=".4"/></svg>
+        </div>
+        <h3 class="svc-name">Virtual Reality (VR) Development</h3>
+        <p class="svc-text">Infinity architects hyper-realistic virtual environments designed to bypass the physical constraints of traditional training. By engineering custom physics engines and biometric feedback loops, we deliver immersive simulations that accelerate skill acquisition and procedure mastery. These are controlled, enterprise-grade voids where complex operations are perfected without risk.</p>
+        <span class="svc-link">Learn more &rarr;</span>
+      </div>
+    </div>
+    <div class="svc-grid-2">
+      <!-- card 4 -->
+      <div class="svc-card rv">
+        <div class="svc-n">04</div>
+        <div class="svc-ico ico-d">
+          <svg viewBox="0 0 36 36" fill="none"><rect x="6" y="6" width="24" height="24" rx="4" fill="#fb923c" opacity=".8" transform="rotate(15 18 18)"/><rect x="10" y="10" width="16" height="16" rx="3" fill="#fed7aa" opacity=".45" transform="rotate(15 18 18)"/></svg>
+        </div>
+        <h3 class="svc-name">Augmented Reality (AR) Development</h3>
+        <p class="svc-text">We transform the physical environment into an interactive data layer through high-precision augmented reality. Our systems utilize advanced spatial anchoring and computer vision to overlay critical operational intelligence directly onto the user’s field of vision. We build these tools to facilitate real-time decision-making in high-stakes industrial and commercial settings.</p>
+        <span class="svc-link">Learn more &rarr;</span>
+      </div>
+      <!-- card 5 -->
+      <div class="svc-card rv">
+        <div class="svc-n">05</div>
+        <div class="svc-ico ico-e">
+          <svg viewBox="0 0 36 36" fill="none"><rect x="3" y="3" width="30" height="30" rx="6" fill="#38bdf8" opacity=".7"/><rect x="9" y="9" width="18" height="18" rx="4" fill="#7dd3fc" opacity=".5"/><circle cx="18" cy="18" r="5" fill="#e0f2fe" opacity=".7"/></svg>
+        </div>
+        <h3 class="svc-name">Game Development</h3>
+        <p class="svc-text">We leverage high-fidelity interactive design to build engagement-focused platforms that go beyond simple entertainment. By applying advanced gamification mechanics and complex behavioral logic, we create high-retention modules for corporate training and interactive brand storytelling. Every build is optimized for performance, ensuring zero-latency interaction.</p>
+        <span class="svc-link">Learn more &rarr;</span>
+      </div>
+      <!-- card 6 -->
+      <div class="svc-card rv">
+        <div class="svc-n">06</div>
+        <div class="svc-ico ico-f">
+          <svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="14" fill="none" stroke="#c084fc" stroke-width="2" opacity=".6"/><circle cx="18" cy="18" r="8" fill="none" stroke="#a855f7" stroke-width="1.5" opacity=".8"/><circle cx="18" cy="18" r="3" fill="#e9d5ff" opacity=".9"/></svg>
+        </div>
+        <h3 class="svc-name">XR Development</h3>
+        <p class="svc-text">Our Extended Reality solutions represent the ultimate convergence of physical and digital infrastructures. We specialize in cross-platform spatial computing that integrates hardware sensors with neural processing to create seamless, high-bandwidth user experiences. This is specialized architecture built for persistent, large-scale enterprise deployment.</p>
+        <span class="svc-link">Learn more &rarr;</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WHAT WE WORK ON ────────────────────────────────────────── -->
+<section id="what">
+  <div class="inner">
+    <div class="what-grid">
+      <div class="what-left rv-l">
+        <div class="sec-label">Our Project Expertise</div>
+        <h2 class="sec-title">We thrive where conventional software reaches<br><span class="hl"> its technical limits.</span></h2>
+        <div class="what-items">
+          <div class="what-item"><div class="what-dot"></div><span class="what-text">Custom application architecture and development</span></div>
+          <div class="what-item"><div class="what-dot"></div><span class="what-text">AI integration into existing systems</span></div>
+          <div class="what-item"><div class="what-dot"></div><span class="what-text">VR and AR applications for training, education, marketing and simulation</span></div>
+          <div class="what-item"><div class="what-dot"></div><span class="what-text">Interactive platforms requiring scalable infrastructure</span></div>
+          <div class="what-item"><div class="what-dot"></div><span class="what-text">Complex user experience and interaction design challenges</span></div>
+        </div>
+        <a href="#contact" class="btn-lime" style="margin-top:36px;display:inline-flex">Get in touch &rarr;</a>
+      </div>
+      <div class="what-right">
+        <div class="stat-card rv-s">
+          <div class="stat-num-big" data-count="45">0+</div>
+          <div class="stat-meta">
+            <div class="stat-label"> High-Impact Deployments</div>
+            <div class="stat-sub">Across AI systems, VR apps and custom software for international clients</div>
+          </div>
+        </div>
+        <div class="stat-card-row">
+          <div class="stat-card rv-s">
+            <div>
+              <div class="stat-num-big" data-count="20">0+</div>
+              <div class="stat-label" style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.95rem;margin-top:4px">Awards</div>
+            </div>
+          </div>
+          <div class="stat-card rv-s" style="flex-direction:column;align-items:flex-start;justify-content:center">
+            <div class="stat-num-big">5.0</div>
+            <div class="stat-label" style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.95rem;margin-top:4px">Review Rating</div>
+            <div class="stat-sub" style="text-align:left;margin-left:0;margin-top:6px">Independent review score on Clutch</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PROJECTS ───────────────────────────────────────────────── -->
+<section id="projects">
+  <div class="inner">
+    <div class="proj-head">
+      <div>
+        <div class="sec-label rv">Our Work</div>
+        <h2 class="sec-title rv">Selected <span class="hl">Projects</span></h2>
+      </div>
+      <a href="#" class="btn-ghost rv">View all case studies &rarr;</a>
+    </div>
+
+    <div class="proj-grid">
+      <!-- tall left card -->
+      <div class="proj-card tall rv">
+        <img src="project1.jpg" alt="Cubedot AI Project" class="proj-bg proj-img">
+        <div class="proj-bg-overlay"></div>
+        <div class="proj-label-art">Cubedot AI</div>
+        <div class="proj-overlay">
+          <div class="proj-tags"><span class="proj-tag">Artificial Intelligence</span><span class="proj-tag">LLM Integration</span></div>
+          <div class="proj-name">Cubedot AI — Product Scoping Automation</div>
+          <div class="proj-type">Cuts spec creation time by 60%</div>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </div>
+
+      <!-- right column stacked -->
+      <div style="display:grid;gap:3px">
+        <div class="proj-card rv">
+          <img src="project2.jpg" alt="Rexee VR Project" class="proj-bg proj-img">
+          <div class="proj-bg-overlay"></div>
+          <div class="proj-label-art">REXEE</div>
+          <div class="proj-overlay">
+            <div class="proj-tags"><span class="proj-tag">Virtual Reality</span><span class="proj-tag">Unity</span><span class="proj-tag">AIXR Nominee</span></div>
+            <div class="proj-name">Rexee — World's First VR Market Research App</div>
+          </div>
+          <div class="proj-arrow">↗</div>
+        </div>
+        <div class="proj-card rv">
+          <img src="project3.jpg" alt="Microsoft Project" class="proj-bg proj-img">
+          <div class="proj-bg-overlay"></div>
+          <div class="proj-label-art">MICROSOFT</div>
+          <div class="proj-overlay">
+            <div class="proj-tags"><span class="proj-tag">Gamification</span><span class="proj-tag">AR/VR</span></div>
+            <div class="proj-name">Microsoft Matching Game — Gamification Marketing</div>
+          </div>
+          <div class="proj-arrow">↗</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- bottom row -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;margin-top:3px">
+      <div class="proj-card rv" style="aspect-ratio:4/3">
+        <img src="project4.jpg" alt="VR Events Project" class="proj-bg proj-img">
+        <div class="proj-bg-overlay"></div>
+        <div class="proj-label-art">VR EVENTS</div>
+        <div class="proj-overlay">
+          <div class="proj-tags"><span class="proj-tag">Virtual Reality</span><span class="proj-tag">Events</span></div>
+          <div class="proj-name">VR for Events — 140% ROI Case Study</div>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </div>
+      <div class="proj-card rv" style="aspect-ratio:4/3">
+        <img src="project5.jpg" alt="Kois VR Project" class="proj-bg proj-img">
+        <div class="proj-bg-overlay"></div>
+        <div class="proj-label-art">KOIS VR</div>
+        <div class="proj-overlay">
+          <div class="proj-tags"><span class="proj-tag">VR Training</span><span class="proj-tag">Education</span></div>
+          <div class="proj-name">Kois Center VR — Training & Education</div>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </div>
+      <div class="proj-card rv" style="aspect-ratio:4/3">
+        <img src="project6.jpg" alt="Ford AR Project" class="proj-bg proj-img">
+        <div class="proj-bg-overlay"></div>
+        <div class="proj-label-art">FORD AR</div>
+        <div class="proj-overlay">
+          <div class="proj-tags"><span class="proj-tag">Augmented Reality</span><span class="proj-tag">Automotive</span></div>
+          <div class="proj-name">Ford Bronco AR — Automotive Marketing</div>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT / PROCESS ────────────────────────────────────────── -->
+<section id="about">
+  <div class="inner">
+    <div class="about-grid">
+      <div>
+        <div class="sec-label rv">About / What We Do</div>
+        <h2 class="sec-title rv">Our development<br><span class="hl">process</span></h2>
+        <div class="process-steps">
+          <div class="ps rv"><span class="ps-num">01</span><div><div class="ps-name">Discovery and technical validation</div><div class="ps-desc">We audit your goals, constraints and technical environment before writing a single line of code.</div></div><div class="ps-bar"></div></div>
+          <div class="ps rv"><span class="ps-num">02</span><div><div class="ps-name">Architecture and UX planning</div><div class="ps-desc">System design, user flows and interface blueprints that anchor the entire build.</div></div><div class="ps-bar"></div></div>
+          <div class="ps rv"><span class="ps-num">03</span><div><div class="ps-name">Software development and integration</div><div class="ps-desc">Agile, iterative development cycles with constant transparency and communication.</div></div><div class="ps-bar"></div></div>
+          <div class="ps rv"><span class="ps-num">04</span><div><div class="ps-name">Testing and iteration</div><div class="ps-desc">Rigorous QA processes ensuring every deliverable meets production-grade standards.</div></div><div class="ps-bar"></div></div>
+          <div class="ps rv"><span class="ps-num">05</span><div><div class="ps-name">Deployment and long-term support</div><div class="ps-desc">Smooth rollout pipelines and ongoing maintenance to keep your product at peak performance.</div></div><div class="ps-bar"></div></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="caps-card rv-s">
+          <div class="new-badge"><span class="new-dot"></span>New — Latest Innovations</div>
+          <h3 class="caps-title">Core technical capabilities</h3>
+          <p class="caps-sub">We combine software engineering, AI integration and immersive technologies to build scalable, production-ready systems.</p>
+          <ul class="caps-list">
+            <li>Custom backend and cloud-based system architecture</li>
+            <li>AI integration and automation workflows</li>
+            <li>Real-time 3D and immersive application development</li>
+            <li>API integrations and enterprise system interoperability</li>
+            <li>Performance optimization and scalable infrastructure</li>
+          </ul>
+        </div>
+        <div class="awards-row">
+          <div class="award-box rv-s"><div class="award-rank">No. 1</div><div class="award-name">Best AR/VR Company 2024 — Tech Times</div></div>
+          <div class="award-box rv-s"><div class="award-rank">Top 3</div><div class="award-name">AR/VR Developers in UK — Clutch</div></div>
+          <div class="award-box rv-s"><div class="award-rank">No. 1</div><div class="award-name">Best Metaverse Agency — P2P Marketing</div></div>
+          <div class="award-box rv-s"><div class="award-rank">2024</div><div class="award-name">Best Enterprise VR — AIXR Nominee</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── HOW WE WORK ────────────────────────────────────────────── -->
+<section id="process">
+  <div class="inner">
+    <div class="process-head">
+      <div class="sec-label rv">How We Work</div>
+      <h2 class="sec-title rv">How we do <span class="hl">things</span></h2>
+      <p style="color:var(--muted);max-width:500px;margin:18px auto 0;font-size:.94rem;line-height:1.75" class="rv">Our unique combination of consulting, art and development expertise allows us to simplify complex development projects.</p>
+    </div>
+
+    <div class="hw-grid">
+      <div class="hw rv"><div class="hw-n">01</div><div class="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div class="hw-name">Initial Scoping</div><p class="hw-text">Expert design thinking sessions to understand your needs and business objectives in depth.</p><div class="hw-underline"></div></div>
+      <div class="hw rv"><div class="hw-n">02</div><div class="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg></div><div class="hw-name">Planning & Kick Off</div><p class="hw-text">Defining and planning every detail — timelines, resources and technical requirements.</p><div class="hw-underline"></div></div>
+      <div class="hw rv"><div class="hw-n">03</div><div class="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div class="hw-name">Design</div><p class="hw-text">Turning the concept into a designed experience ready to be developed and approved.</p><div class="hw-underline"></div></div>
+      <div class="hw rv"><div class="hw-n">04</div><div class="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><div class="hw-name">Development</div><p class="hw-text">Implementing the features in the technology selected for the project with regular check-ins.</p><div class="hw-underline"></div></div>
+    </div>
+    <div class="hw-grid-2">
+      <div class="hw rv"><div class="hw-n">05</div><div class="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div class="hw-name">Testing</div><p class="hw-text">Ensuring a seamless, smooth experience across all target platforms and devices.</p><div class="hw-underline"></div></div>
+      <div class="hw rv"><div class="hw-n">06</div><div class="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="7.5 4.21 12 6.81 16.5 4.21"/><polyline points="7.5 19.79 7.5 14.6 3 12"/><polyline points="21 12 16.5 14.6 16.5 19.79"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div><div class="hw-name">Deployment</div><p class="hw-text">Staging versions for your review before production releases go live to the world.</p><div class="hw-underline"></div></div>
+      <div class="hw rv"><div class="hw-n">07</div><div class="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div><div class="hw-name">Final Release</div><p class="hw-text">After sign-off from your side, a clean production release ready to launch.</p><div class="hw-underline"></div></div>
+      <div class="hw rv"><div class="hw-n">08</div><div class="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m5.08 5.08l4.24 4.24M1 12h6m6 0h6M4.22 19.78l4.24-4.24m5.08-5.08l4.24-4.24"/></svg></div><div class="hw-name">Maintenance</div><p class="hw-text">Ongoing support to keep you satisfied and your product running at its best.</p><div class="hw-underline"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TESTIMONIALS ───────────────────────────────────────────── -->
+<section id="testimonials">
+  <div class="inner">
+    <div class="testi-head">
+      <div class="sec-label rv">Client Reviews</div>
+      <h2 class="sec-title rv">What our clients <span class="hl">say</span></h2>
+    </div>
+  </div>
+  <div class="testi-track-wrap">
+    <div class="testi-track">
+      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">I could not be more pleased with how responsive, engaged, and easy to work with their team was.</p><div class="testi-author">Ryan Mallet</div><div class="testi-role">Senior Marketing Manager, Microsoft</div></div>
+      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">Takeaway Reality has outperformed and exceeded expectations; they developed a usable demo in three months, on time and within budget.</p><div class="testi-author">Ennio Armato</div><div class="testi-role">CEO, FFIND</div></div>
+      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">The team is accessible 24/7 and I am so impressed by the work they deliver.</p><div class="testi-author">Marie-Laure De Veyt</div><div class="testi-role">Senior Marketing Manager, Microsoft</div></div>
+      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">Releases were well planned, well organized, and well documented, so I always knew where project development was.</p><div class="testi-author">Johnny Kois</div><div class="testi-role">CEO, Kois Center</div></div>
+      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">They always provide exceptional service and delivery, regardless of the project size.</p><div class="testi-author">Karine Kukovica</div><div class="testi-role">Senior Manager, Cinco</div></div>
+      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">TAR makes it very easy for clients to understand the technology and proactively suggests directions.</p><div class="testi-author">Tin Saric</div><div class="testi-role">Founder & COO, Bitx</div></div>
+      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">Their dedication to not only deliver the solution but optimize the overall VR experience was extraordinary.</p><div class="testi-author">Erik Matosevic</div><div class="testi-role">Founder & CEO, Orion Labs</div></div>
+      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">What impressed me the most was the motivation and passion the TAR team showed during our VR project.</p><div class="testi-author">Sam Beni</div><div class="testi-role">Founder & CEO, Platin</div></div>
+      <!-- duplicate for loop -->
+      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">I could not be more pleased with how responsive, engaged, and easy to work with their team was.</p><div class="testi-author">Ryan Mallet</div><div class="testi-role">Senior Marketing Manager, Microsoft</div></div>
+      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">Takeaway Reality has outperformed and exceeded expectations; they developed a usable demo in three months, on time and within budget.</p><div class="testi-author">Ennio Armato</div><div class="testi-role">CEO, FFIND</div></div>
+      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">The team is accessible 24/7 and I am so impressed by the work they deliver.</p><div class="testi-author">Marie-Laure De Veyt</div><div class="testi-role">Senior Marketing Manager, Microsoft</div></div>
+      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">Releases were well planned, well organized, and well documented, so I always knew where project development was.</p><div class="testi-author">Johnny Kois</div><div class="testi-role">CEO, Kois Center</div></div>
+      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">They always provide exceptional service and delivery, regardless of the project size.</p><div class="testi-author">Karine Kukovica</div><div class="testi-role">Senior Manager, Cinco</div></div>
+      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">TAR makes it very easy for clients to understand the technology and proactively suggests directions.</p><div class="testi-author">Tin Saric</div><div class="testi-role">Founder & COO, Bitx</div></div>
+      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">Their dedication to not only deliver the solution but optimize the overall VR experience was extraordinary.</p><div class="testi-author">Erik Matosevic</div><div class="testi-role">Founder & CEO, Orion Labs</div></div>
+      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">What impressed me the most was the motivation and passion the TAR team showed during our VR project.</p><div class="testi-author">Sam Beni</div><div class="testi-role">Founder & CEO, Platin</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── AWARDS ─────────────────────────────────────────────────── -->
+<section id="awards">
+  <div class="awards-inner">
+    <div class="awards-label">
+      <div class="sec-label rv" style="justify-content:center"><span style="width:20px;height:1px;background:var(--muted);display:block"></span>Recognition<span style="width:20px;height:1px;background:var(--muted);display:block"></span></div>
+      <h2 class="sec-title rv" style="text-align:center">Global leaders in <span class="hl">Spatial Computing</span></h2>
+      <p style="color:var(--muted);font-size:.92rem;margin-top:12px;text-align:center" class="rv">Consistently ranking among the top 10 global metaverse AR and VR developers.</p>
+    </div>
+    <div class="awards-grid">
+      <div class="award-pill rv"><div class="award-pill-rank">No. 1</div><div class="award-pill-name">Best AR/VR Development Company</div><div class="award-pill-src">Tech Times</div></div>
+      <div class="award-pill rv"><div class="award-pill-rank">No. 1</div><div class="award-pill-name">Best AR/VR Development Agency 2023</div><div class="award-pill-src">DesignRush</div></div>
+      <div class="award-pill rv"><div class="award-pill-rank">2024</div><div class="award-pill-name">Best Enterprise VR Solution Nominee</div><div class="award-pill-src">AIXR Awards</div></div>
+      <div class="award-pill rv"><div class="award-pill-rank">No. 1</div><div class="award-pill-name">World's Best Metaverse Agency</div><div class="award-pill-src">P2P Marketing</div></div>
+      <div class="award-pill rv"><div class="award-pill-rank">Top 5</div><div class="award-pill-name">AR/VR Developers in the UK</div><div class="award-pill-src">The Manifest</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FAQ ────────────────────────────────────────────────────── -->
+<section id="faq">
+  <div class="inner">
+    <div class="faq-grid">
+      <div class="faq-left">
+        <div class="sec-label rv">FAQ</div>
+        <h2 class="sec-title rv">Your questions,<br><span class="hl">answered</span></h2>
+        <p class="faq-cta-text rv">View some of our frequently asked questions — they might take your concerns away!</p>
+        <a href="#" class="btn-ghost rv">View all FAQs &rarr;</a>
+      </div>
+      <div class="faq-items rv">
+        <div class="faq-item open">
+          <div class="faq-q">How can I get started with VR Development?<span class="faq-icon">+</span></div>
+          <div class="faq-a">Getting started is simple — reach out via our contact form and we'll schedule a free consulting call. We walk you through the process, assess your needs and propose the best technical path forward, whether that's VR, AR or a hybrid approach.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What is VR App Development?<span class="faq-icon">+</span></div>
+          <div class="faq-a">VR App Development is the process of creating software applications that run inside virtual reality headsets like Meta Quest, HTC Vive or Apple Vision Pro. These apps create fully immersive 3D environments for training, simulation, entertainment or marketing.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">How does AR App Development work?<span class="faq-icon">+</span></div>
+          <div class="faq-a">AR development overlays digital content onto the real world, typically via a smartphone camera or AR glasses. We build AR apps using platforms like ARKit, ARCore and Unity, integrating 3D models, animations and interactive overlays into your environment.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">How long does a typical project take?<span class="faq-icon">+</span></div>
+          <div class="faq-a">Project timelines vary depending on scope and complexity. A focused AR proof-of-concept might take 6–8 weeks, while a full-scale VR training platform could take 4–6 months. We provide clear timelines during our discovery and planning phase.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Do you work with startups or only enterprise clients?<span class="faq-icon">+</span></div>
+          <div class="faq-a">We work with both. Our client base ranges from funded startups building their first MVP to Fortune 500 companies like Microsoft and Ford deploying complex immersive experiences. We tailor our approach to match your budget and goals.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT ─────────────────────────────────────────────────── -->
+<section id="contact">
+  <div class="contact-wrap">
+    <div class="c-ring c-ring-1"></div>
+    <div class="c-ring c-ring-2"></div>
+    <div class="c-ring c-ring-3"></div>
+    <div class="contact-inner">
+      <h2 class="contact-h2 rv">Have a project<br>in mind?</h2>
+      <p class="contact-sub rv">Send us a message to learn more about our process and let us take your project from idea to reality.</p>
+      
+      <form class="contact-form rv" id="contactForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="name">Name</label>
+            <input type="text" id="name" name="name" class="form-input" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-input" placeholder="your@email.com" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="company">Company Name</label>
+          <input type="text" id="company" name="company" class="form-input" placeholder="Your company">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="message">Message</label>
+          <textarea id="message" name="message" class="form-textarea" placeholder="Tell us about your project..." required></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Message &rarr;</button>
+        <div id="formMessage" style="margin-top:16px;text-align:center;color:#fff;font-size:.9rem"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-wrap">
+    <div class="footer-top">
+      <div>
+        <div class="f-brand">TAR</div>
+        <p class="f-tagline">An award-winning AR, VR and AI development agency working with the world's largest brands and ambitious startups.</p>
+        <div class="f-socials">
+          <a href="https://x.com/tar_metaverse" class="f-social">Tw</a>
+          <a href="http://instagram.com/takeaway_reality" class="f-social">Ig</a>
+          <a href="https://www.linkedin.com/company/takeaway-reality" class="f-social">Li</a>
+          <a href="https://www.youtube.com/@TAR-TV" class="f-social">Yt</a>
+        </div>
+      </div>
+      <div>
+        <div class="f-col-title">Services</div>
+        <div class="f-links">
+          <a href="#">Custom Software</a>
+          <a href="#">AI Development</a>
+          <a href="#">VR Development</a>
+          <a href="#">AR Development</a>
+          <a href="#">Roblox Development</a>
+          <a href="#">Enterprise Apps</a>
+        </div>
+      </div>
+      <div>
+        <div class="f-col-title">Company</div>
+        <div class="f-links">
+          <a href="#">About Us</a>
+          <a href="#">Our Work</a>
+          <a href="#">Blog</a>
+          <a href="#">FAQ</a>
+          <a href="#">VR for Events</a>
+        </div>
+      </div>
+      <div>
+        <div class="f-col-title">Get in Touch</div>
+        <div class="f-links">
+          <a href="#">Start a Project</a>
+          <a href="#">Free Consulting Call</a>
+          <a href="#">Clutch Reviews</a>
+          <a href="#">Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="f-copy">2026 Takeaway Reality Ltd. All rights reserved.</div>
+      <div class="f-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Cookie Settings</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── SCRIPTS ────────────────────────────────────────────────── -->
+<script>
+// ── WEBGL FLUID HERO ──────────────────────────────────────────
+(function(){
+  const canvas=document.getElementById('hero-canvas');
+  const gl=canvas.getContext('webgl')||canvas.getContext('experimental-webgl');
+  if(!gl)return;
+  function resize(){canvas.width=canvas.offsetWidth;canvas.height=canvas.offsetHeight;gl.viewport(0,0,canvas.width,canvas.height);}
+  resize(); window.addEventListener('resize',resize);
+
+  const vert=`attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}`;
+  const frag=`
+precision highp float;
+uniform float t;
+uniform vec2 res;
+uniform vec2 mouse;
+vec3 mod289(vec3 x){return x-floor(x*(1./289.))*289.;}
+vec2 mod289(vec2 x){return x-floor(x*(1./289.))*289.;}
+vec3 permute(vec3 x){return mod289(((x*34.)+1.)*x);}
+float snoise(vec2 v){
+  const vec4 C=vec4(.211324865405187,.366025403784439,-.577350269189626,.024390243902439);
+  vec2 i=floor(v+dot(v,C.yy));
+  vec2 x0=v-i+dot(i,C.xx);
+  vec2 i1=(x0.x>x0.y)?vec2(1.,0.):vec2(0.,1.);
+  vec4 x12=x0.xyxy+C.xxzz; x12.xy-=i1;
+  i=mod289(i);
+  vec3 p2=permute(permute(i.y+vec3(0.,i1.y,1.))+i.x+vec3(0.,i1.x,1.));
+  vec3 m=max(.5-vec3(dot(x0,x0),dot(x12.xy,x12.xy),dot(x12.zw,x12.zw)),0.);
+  m=m*m;m=m*m;
+  vec3 x2=2.*fract(p2*C.www)-1.;
+  vec3 h=abs(x2)-.5;
+  vec3 ox=floor(x2+.5);
+  vec3 a0=x2-ox;
+  m*=1.79284291400159-.85373472095314*(a0*a0+h*h);
+  vec3 g2;
+  g2.x=a0.x*x0.x+h.x*x0.y;
+  g2.yz=a0.yz*x12.xz+h.yz*x12.yw;
+  return 130.*dot(m,g2);
+}
+void main(){
+  vec2 uv=gl_FragCoord.xy/res;
+  vec2 mu=mouse/res;
+  float tm=t*.16;
+  float n1=snoise(uv*1.7+vec2(tm*.55,tm*.38));
+  float n2=snoise(uv*3.0-vec2(tm*.28,tm*.65)+n1*.32);
+  float n3=snoise(uv*5.5+vec2(tm*.48,-tm*.48)+n2*.22);
+  float md=length(uv-mu);
+  float mi=smoothstep(.55,0.,md)*.16;
+  float n4=snoise((uv+(mu-uv)*mi)*2.4+tm*.38);
+  float f=(n1*.5+n2*.3+n3*.14+n4*.06)*.5+.5;
+  vec3 cA=vec3(.01,.01,.055);   // deep navy
+  vec3 cB=vec3(.03,.14,.52);    // cobalt blue
+  vec3 cC=vec3(.015,.48,.65);   // teal
+  vec3 cD=vec3(.20,.03,.50);    // violet
+  vec3 cE=vec3(.0,.75,.68);     // bright teal highlight
+  vec3 col;
+  if(f<.25)      col=mix(cA,cD,f*4.);
+  else if(f<.50) col=mix(cD,cB,(f-.25)*4.);
+  else if(f<.72) col=mix(cB,cC,(f-.50)*4.545);
+  else           col=mix(cC,cE,(f-.72)*3.571);
+  float sh1=snoise(uv*4.8+vec2(-tm*.85,tm*.55));
+  sh1=pow(max(sh1*.5+.5,0.),3.8);
+  col+=cE*sh1*.4;
+  float sh2=snoise(uv*3.8+vec2(tm*.65,tm*.38)+8.3);
+  sh2=pow(max(sh2*.5+.5,0.),4.5);
+  col+=cD*sh2*.28;
+  col*=.86;
+  float vig=1.-smoothstep(.25,1.15,length(uv-.5)*1.55);
+  col*=vig;
+  gl_FragColor=vec4(col,1.);
+}`;
+
+  function mkShader(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return s;}
+  const prog=gl.createProgram();
+  gl.attachShader(prog,mkShader(gl.VERTEX_SHADER,vert));
+  gl.attachShader(prog,mkShader(gl.FRAGMENT_SHADER,frag));
+  gl.linkProgram(prog); gl.useProgram(prog);
+
+  const buf=gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+  const ap=gl.getAttribLocation(prog,'p');
+  gl.enableVertexAttribArray(ap);
+  gl.vertexAttribPointer(ap,2,gl.FLOAT,false,0,0);
+
+  const uT=gl.getUniformLocation(prog,'t');
+  const uR=gl.getUniformLocation(prog,'res');
+  const uM=gl.getUniformLocation(prog,'mouse');
+  let hx=0,hy=0;
+  document.addEventListener('mousemove',e=>{
+    const r=canvas.getBoundingClientRect();
+    hx=e.clientX-r.left; hy=r.height-(e.clientY-r.top);
+  });
+  const s0=performance.now();
+  (function frame(){
+    const tm=(performance.now()-s0)/1000;
+    gl.uniform1f(uT,tm); gl.uniform2f(uR,canvas.width,canvas.height); gl.uniform2f(uM,hx,hy);
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+    requestAnimationFrame(frame);
+  })();
+})();
+
+// ── NAV SCROLL ────────────────────────────────────────────────
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>60),{passive:true});
+
+// ── HERO ENTRANCE ─────────────────────────────────────────────
+gsap.registerPlugin(ScrollTrigger);
+gsap.timeline({delay:.2})
+  .to('.hero-badge',{opacity:1,y:0,duration:.85,ease:'power3.out'})
+  .to('.hero-h1',{opacity:1,y:0,duration:1.05,ease:'power3.out'},'-=.55')
+  .to('.hero-sub',{opacity:1,y:0,duration:.8,ease:'power3.out'},'-=.5')
+  .to('.hero-btns',{opacity:1,y:0,duration:.7,ease:'power3.out'},'-=.4')
+  .to('.scroll-hint',{opacity:1,duration:.6},'-=.2');
+
+// set initial states
+gsap.set(['.hero-badge','.hero-h1','.hero-sub','.hero-btns'],{opacity:0,y:36});
+gsap.set('.scroll-hint',{opacity:0});
+
+// ── SCROLL REVEALS ────────────────────────────────────────────
+gsap.utils.toArray('.rv').forEach((el,i)=>{
+  gsap.fromTo(el,{opacity:0,y:48},{opacity:1,y:0,duration:.9,ease:'power3.out',
+    delay:(i%4)*.07,
+    scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none none'}
+  });
+});
+gsap.utils.toArray('.rv-l').forEach(el=>{
+  gsap.fromTo(el,{opacity:0,x:-48},{opacity:1,x:0,duration:1,ease:'power3.out',
+    scrollTrigger:{trigger:el,start:'top 86%',toggleActions:'play none none none'}
+  });
+});
+gsap.utils.toArray('.rv-s').forEach((el,i)=>{
+  gsap.fromTo(el,{opacity:0,scale:.9},{opacity:1,scale:1,duration:.9,ease:'back.out(1.4)',
+    delay:i*.1,
+    scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none none'}
+  });
+});
+
+// ── STAT COUNTERS ─────────────────────────────────────────────
+document.querySelectorAll('[data-count]').forEach(el=>{
+  const target=parseInt(el.dataset.count);
+  const suffix=el.textContent.replace(/[0-9]/g,'');
+  ScrollTrigger.create({trigger:el,start:'top 90%',once:true,onEnter:()=>{
+    gsap.fromTo({v:0},{v:target},{duration:2,ease:'power2.out',
+      onUpdate:function(){el.textContent=Math.round(this.targets()[0].v)+suffix;}
+    });
+  }});
+});
+
+// ── FAQ ACCORDION ─────────────────────────────────────────────
+document.querySelectorAll('.faq-q').forEach(q=>{
+  q.addEventListener('click',()=>{
+    const item=q.closest('.faq-item');
+    const wasOpen=item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+    if(!wasOpen) item.classList.add('open');
+  });
+});
+
+// ── CONTACT RING SPIN ─────────────────────────────────────────
+gsap.to('.c-ring-3',{rotation:360,duration:80,ease:'none',repeat:-1});
+gsap.to('.c-ring-2',{rotation:-360,duration:120,ease:'none',repeat:-1});
+
+// ── CONTACT FORM SUBMISSION ───────────────────────────────────
+document.getElementById('contactForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const formMessage = document.getElementById('formMessage');
+  const submitBtn = e.target.querySelector('.form-submit');
+  const originalText = submitBtn.textContent;
+  
+  // Disable button and show loading
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending...';
+  formMessage.textContent = '';
+  
+  const formData = {
+    name: document.getElementById('name').value,
+    email: document.getElementById('email').value,
+    company: document.getElementById('company').value,
+    message: document.getElementById('message').value
+  };
+  
+  try {
+    const response = await fetch('http://localhost:5000/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    });
+    
+    const data = await response.json();
+    
+    if (response.ok) {
+      formMessage.style.color = '#4ade80';
+      formMessage.textContent = '✓ Message sent successfully!';
+      e.target.reset();
+    } else {
+      formMessage.style.color = '#f87171';
+      formMessage.textContent = '✗ ' + (data.message || 'Failed to send message');
+    }
+  } catch (error) {
+    formMessage.style.color = '#f87171';
+    formMessage.textContent = '✗ Network error. Please try again.';
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalText;
+  }
+});
+
+// ── SERVICE CARD 3D TILT ──────────────────────────────────────
+document.querySelectorAll('.svc-card').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-.5;
+    const y=(e.clientY-r.top)/r.height-.5;
+    gsap.to(card,{rotateY:x*12,rotateX:-y*10,duration:.25,ease:'power2.out',transformPerspective:800});
+  });
+  card.addEventListener('mouseleave',()=>{
+    gsap.to(card,{rotateY:0,rotateX:0,duration:.55,ease:'elastic.out(1,.6)',transformPerspective:800});
+  });
+});
+
+// ── PROJECT CARD PARALLAX LABEL ───────────────────────────────
+document.querySelectorAll('.proj-card').forEach(card=>{
+  const label=card.querySelector('.proj-label-art');
+  if(!label)return;
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-.5;
+    const y=(e.clientY-r.top)/r.height-.5;
+    gsap.to(label,{x:x*18,y:y*12,duration:.4,ease:'power2.out'});
+  });
+  card.addEventListener('mouseleave',()=>{
+    gsap.to(label,{x:0,y:0,duration:.6,ease:'elastic.out(1,.5)'});
+  });
+});
+
+// ── AWARD PILL RIPPLE ─────────────────────────────────────────
+document.querySelectorAll('.award-pill').forEach(pill=>{
+  pill.addEventListener('click',e=>{
+    const ripple=document.createElement('span');
+    const r=pill.getBoundingClientRect();
+    ripple.style.cssText=`position:absolute;border-radius:50%;background:rgba(255,107,53,.25);width:10px;height:10px;top:${e.clientY-r.top-5}px;left:${e.clientX-r.left-5}px;pointer-events:none;transform:scale(0)`;
+    pill.style.position='relative';pill.style.overflow='hidden';
+    pill.appendChild(ripple);
+    gsap.to(ripple,{scale:30,opacity:0,duration:.7,ease:'power2.out',onComplete:()=>ripple.remove()});
+  });
+});
+
+// ── SVG ICON ANIMATIONS ───────────────────────────────────────
+document.querySelectorAll('.hw-icon svg').forEach(svg=>{
+  const paths = svg.querySelectorAll('path, polyline, line, circle, rect');
+  paths.forEach(p=>{
+    const len = p.getTotalLength ? p.getTotalLength() : 0;
+    if(len){
+      gsap.set(p,{strokeDasharray:len,strokeDashoffset:len});
+    }
+  });
+  
+  const card = svg.closest('.hw');
+  card.addEventListener('mouseenter',()=>{
+    paths.forEach((p,i)=>{
+      const len = p.getTotalLength ? p.getTotalLength() : 0;
+      if(len){
+        gsap.fromTo(p,
+          {strokeDashoffset:len},
+          {strokeDashoffset:0,duration:.8,delay:i*.08,ease:'power2.out'}
+        );
+      }
+    });
+  });
+  
+  card.addEventListener('mouseleave',()=>{
+    paths.forEach(p=>{
+      const len = p.getTotalLength ? p.getTotalLength() : 0;
+      if(len){
+        gsap.set(p,{strokeDashoffset:len});
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>

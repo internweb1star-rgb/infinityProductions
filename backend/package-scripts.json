@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "setup": "node setup.js",
+    "test-email": "node test-email.js",
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  }
+}
