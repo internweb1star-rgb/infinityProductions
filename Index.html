@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Takeaway Reality — AI, AR/VR & SaaS Development Company</title>
+<title>Infinity Productions — AI, AR/VR & game Development Company</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -218,7 +218,8 @@ section{padding:110px 52px;position:relative;overflow:hidden}
 .hw:hover .hw-underline{width:100%}
 .hw-grid-2{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:2px}
 
-/* ── TESTIMONIALS ────────────────────────────────────────────── */
+
+/* ── TESTIMONIALS ──────────────────────────────────────────── */
 #testimonials{background:var(--surface);padding:110px 52px}
 .testi-head{text-align:center;margin-bottom:64px}
 .testi-head .sec-label{justify-content:center}
@@ -228,23 +229,20 @@ section{padding:110px 52px;position:relative;overflow:hidden}
 .testi-track-wrap::before,.testi-track-wrap::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none}
 .testi-track-wrap::before{left:0;background:linear-gradient(to right,var(--surface),transparent)}
 .testi-track-wrap::after{right:0;background:linear-gradient(to left,var(--surface),transparent)}
-.testi-track{display:flex;gap:16px;animation:testiScroll 40s linear infinite;width:max-content}
-.testi-track:hover{animation-play-state:paused}
+.testi-track{display:flex;gap:16px;width:max-content}
 .testi-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:32px 28px;width:320px;flex-shrink:0;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
-.testi-card:hover{border-color:rgba(123,47,255,.25);transform:translateY(-4px)}
+.testi-card:hover{border-color:rgba(255,107,53,.25);transform:translateY(-4px)}
 .testi-card::before{content:'\201C';position:absolute;top:16px;right:24px;font-size:4rem;font-family:'Space Grotesk',sans-serif;font-weight:700;color:rgba(255,255,255,.04);line-height:1}
 .testi-quote{color:var(--muted);font-size:.88rem;line-height:1.7;margin-bottom:20px;position:relative}
 .testi-author{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.9rem;margin-bottom:2px}
-.testi-role{color:var(--muted);font-size:.78rem}
 .testi-stars{display:flex;gap:3px;margin-bottom:14px}
 .star{width:12px;height:12px;background:var(--lime);border-radius:2px;clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
-@keyframes testiScroll{to{transform:translateX(-50%)}}
 
 /* ── AWARDS STRIP ────────────────────────────────────────────── */
 #awards{background:var(--bg);padding:80px 52px}
 .awards-inner{max-width:1200px;margin:0 auto}
 .awards-label{text-align:center;margin-bottom:48px}
-.awards-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:2px}
+.awards-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;justify-content:center}
 .award-pill{background:var(--surface);border:1px solid var(--border);padding:28px 20px;text-align:center;transition:border-color .3s,background .3s}
 .award-pill:hover{border-color:rgba(255,107,53,.18);background:var(--card)}
 .award-pill-rank{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:700;background:linear-gradient(135deg,#ff6b35,#ff8c42);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:6px}
@@ -340,6 +338,277 @@ footer{background:#020208;padding:72px 52px 40px;border-top:1px solid var(--bord
 .ps:hover .ps-num{color:#fff;text-shadow:0 0 18px rgba(255,107,53,.7);transition:color .3s,text-shadow .3s}
 .ps:hover .ps-name{color:var(--lime);transition:color .3s}
 
+/* ── HOW-WE-WORK CARD — icon spin + amber border ────── */
+.hw:hover .hw-icon svg{animation:iconSpin .6s ease}
+@keyframes iconSpin{0%,100%{transform:rotate(0deg)}50%{transform:rotate(12deg)}}
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE DESIGN — MOBILE & TABLET
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── TABLET (max-width: 1024px) ─────────────────────────────── */
+@media (max-width: 1024px) {
+  /* Navigation */
+  nav{padding:16px 32px}
+  .nav-links{gap:24px}
+  .nav-links a{font-size:.82rem}
+  
+  /* Sections */
+  section{padding:80px 32px}
+  
+  /* Services */
+  .svc-head{grid-template-columns:1fr;gap:24px}
+  .svc-grid,.svc-grid-2{grid-template-columns:repeat(2,1fr)}
+  
+  /* What We Work On */
+  .what-grid{grid-template-columns:1fr;gap:16px}
+  .what-right{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .stat-card-row{grid-template-columns:1fr}
+  
+  /* Projects */
+  .proj-grid{grid-template-columns:1fr}
+  .proj-card.tall{grid-row:span 1}
+  
+  /* About */
+  .about-grid{grid-template-columns:1fr;gap:48px}
+  
+  /* How We Work */
+  .hw-grid,.hw-grid-2{grid-template-columns:repeat(2,1fr)}
+  
+  /* Testimonials */
+  #testimonials{padding:60px 20px}
+  .testi-head{margin-bottom:40px}
+  .testi-track-wrap::before,.testi-track-wrap::after{width:40px}
+  .testi-card{width:280px;padding:24px 20px}
+  
+  /* Awards */
+  .awards-grid{grid-template-columns:repeat(2,1fr)}
+  
+  /* FAQ */
+  .faq-grid{grid-template-columns:1fr;gap:48px}
+  
+  /* Footer */
+  .footer-top{grid-template-columns:repeat(2,1fr);gap:40px}
+}
+
+/* ── MOBILE (max-width: 768px) ──────────────────────────────── */
+@media (max-width: 768px) {
+  /* Navigation */
+  nav{padding:14px 20px;flex-wrap:wrap;gap:12px}
+  .nav-logo{font-size:1.1rem}
+  .nav-links{display:none}
+  .nav-cta{padding:8px 18px;font-size:.8rem}
+  
+  /* Hero */
+  #hero{padding:100px 24px 80px;min-height:90vh}
+  .hero-h1{font-size:clamp(2rem,8vw,2.8rem);line-height:1.1}
+  .hero-sub{font-size:.95rem;max-width:100%}
+  .hero-btns{flex-direction:column;width:100%;max-width:300px;align-items:center;margin:0 auto}
+  .btn-lime,.btn-ghost{width:100%;justify-content:center;padding:12px 24px}
+  .hero-clients{padding:18px 20px;flex-direction:column;align-items:flex-start;gap:8px}
+  .hero-clients-label{margin-right:0;margin-bottom:8px}
+  .clients-scroll{width:100%}
+  .scroll-hint{bottom:100px}
+  
+  /* Sections */
+  section{padding:60px 20px}
+  .sec-title{font-size:clamp(1.6rem,6vw,2.2rem)}
+  .sec-label{font-size:.7rem}
+  
+  /* Services */
+  .svc-head{margin-bottom:40px}
+  .svc-grid,.svc-grid-2{grid-template-columns:1fr;gap:12px}
+  .svc-card{padding:32px 24px}
+  .svc-n{font-size:2rem;top:16px;right:16px}
+  
+  /* What We Work On */
+  .what-left{padding:40px 24px}
+  .what-right{grid-template-columns:1fr;gap:12px}
+  .stat-card{padding:32px 24px;flex-direction:column;align-items:flex-start}
+  .stat-meta{text-align:left;margin-left:0}
+  .stat-sub{max-width:100%}
+  .stat-card-row{gap:12px}
+  
+  /* Projects */
+  .proj-head{flex-direction:column;align-items:flex-start;gap:20px;margin-bottom:32px}
+  .proj-grid{gap:12px}
+  .proj-card{aspect-ratio:4/3}
+  .proj-overlay{padding:20px}
+  .proj-name{font-size:1.05rem}
+  .proj-tag{font-size:.65rem;padding:2px 8px}
+  .proj-more{padding:20px 24px;flex-direction:column;align-items:flex-start;gap:12px}
+  
+  /* About */
+  .about-grid{gap:32px}
+  .process-steps{margin-top:24px}
+  .ps{flex-direction:column;gap:12px;padding:18px 0}
+  .ps-num{min-width:auto}
+  .caps-card{padding:28px 20px}
+  .awards-row{grid-template-columns:1fr;gap:12px}
+  .award-box{padding:18px 16px}
+  
+  /* How We Work */
+  .process-head{margin-bottom:48px}
+  .process-head p{font-size:.88rem}
+  .hw-grid,.hw-grid-2{grid-template-columns:1fr;gap:12px}
+  .hw{padding:24px 20px}
+  
+  /* Testimonials */
+  .testi-track-wrap::before,.testi-track-wrap::after{width:40px}
+  .testi-card{width:280px;padding:24px 20px}
+  
+  /* Awards */
+  #awards{padding:60px 20px}
+  .awards-label{margin-bottom:32px}
+  .awards-grid{grid-template-columns:1fr;gap:12px}
+  .award-pill{padding:20px 16px}
+  
+  /* FAQ */
+  .faq-grid{gap:32px}
+  .faq-q{font-size:.88rem;padding:18px 20px}
+  .faq-a{font-size:.84rem;padding:0 20px}
+  .faq-item.open .faq-a{padding:0 20px 18px}
+  
+  /* Contact */
+  .contact-wrap{padding:80px 24px;min-height:auto}
+  .contact-h2{font-size:clamp(2rem,7vw,2.8rem)}
+  .contact-sub{font-size:.9rem;max-width:100%}
+  .form-row{grid-template-columns:1fr;gap:20px}
+  .c-ring-1{width:300px;height:300px}
+  .c-ring-2{width:500px;height:500px}
+  .c-ring-3{width:700px;height:700px}
+  
+  /* Footer */
+  footer{padding:48px 20px 32px}
+  .footer-top{grid-template-columns:1fr;gap:32px}
+  .footer-bottom{flex-direction:column;gap:16px;align-items:flex-start}
+  .f-legal{flex-direction:column;gap:12px}
+}
+
+/* ── SMALL MOBILE (max-width: 480px) ────────────────────────── */
+@media (max-width: 480px) {
+  /* Hero */
+  #hero{padding:80px 16px 60px}
+  .hero-badge{font-size:.7rem;padding:5px 12px}
+  .hero-h1{font-size:1.8rem}
+  .hero-sub{font-size:.88rem;line-height:1.6}
+  .btn-lime,.btn-ghost{font-size:.85rem;padding:11px 20px}
+  
+  /* Sections */
+  section{padding:48px 16px}
+  .sec-title{font-size:1.5rem}
+  .sec-label{font-size:.68rem}
+  
+  /* Services */
+  .svc-card{padding:24px 18px}
+  .svc-ico{width:52px;height:52px}
+  .svc-ico svg{width:28px;height:28px}
+  .svc-name{font-size:1rem}
+  .svc-text{font-size:.84rem}
+  
+  /* What We Work On */
+  .what-left{padding:32px 18px}
+  .what-item{padding:14px 0}
+  .what-text{font-size:.86rem}
+  .stat-card{padding:24px 18px}
+  .stat-num-big{font-size:2.5rem}
+  .stat-label{font-size:.9rem}
+  .stat-sub{font-size:.78rem}
+  
+  /* Projects */
+  .proj-overlay{padding:16px}
+  .proj-name{font-size:.95rem}
+  .proj-type{font-size:.72rem}
+  .proj-arrow{width:28px;height:28px;font-size:.75rem}
+  
+  /* About */
+  .ps{padding:14px 0}
+  .ps-name{font-size:.88rem}
+  .ps-desc{font-size:.82rem}
+  .caps-card{padding:24px 16px}
+  .caps-title{font-size:1.15rem}
+  .caps-sub{font-size:.84rem}
+  .caps-list li{font-size:.84rem}
+  .award-box{padding:16px 14px}
+  .award-rank{font-size:1.3rem}
+  .award-name{font-size:.75rem}
+  
+  /* How We Work */
+  .hw{padding:20px 16px}
+  .hw-icon{width:32px;height:32px}
+  .hw-icon svg{width:16px;height:16px}
+  .hw-name{font-size:.88rem}
+  .hw-text{font-size:.8rem}
+  
+  /* Testimonials */
+  .testi-card{width:260px;padding:20px 16px}
+  .testi-quote{font-size:.84rem}
+  .testi-author{font-size:.84rem}
+  
+  /* Awards */
+  .award-pill{padding:18px 14px}
+  .award-pill-rank{font-size:1.3rem}
+  .award-pill-name{font-size:.72rem}
+  .award-pill-src{font-size:.68rem}
+  
+  /* FAQ */
+  .faq-q{font-size:.84rem;padding:16px 18px}
+  .faq-a{font-size:.8rem;padding:0 18px}
+  .faq-item.open .faq-a{padding:0 18px 16px}
+  .faq-icon{width:20px;height:20px;font-size:.75rem}
+  
+  /* Contact */
+  .contact-wrap{padding:60px 16px}
+  .contact-h2{font-size:1.8rem}
+  .contact-sub{font-size:.84rem}
+  .form-label{font-size:.84rem}
+  .form-input,.form-textarea{padding:12px 14px;font-size:.86rem}
+  .form-submit{padding:13px 28px;font-size:.9rem}
+  .btn-contact{padding:13px 28px;font-size:.9rem}
+  
+  /* Footer */
+  footer{padding:40px 16px 24px}
+  .f-brand{font-size:1.2rem}
+  .f-tagline{font-size:.84rem}
+  .f-col-title{font-size:.74rem}
+  .f-links a{font-size:.84rem}
+  .f-copy{font-size:.75rem}
+  .f-legal a{font-size:.75rem}
+}
+
+/* ── LANDSCAPE MOBILE (max-height: 500px) ──────────────────── */
+@media (max-height: 500px) and (orientation: landscape) {
+  #hero{min-height:auto;padding:80px 24px 60px}
+  .scroll-hint{display:none}
+  .hero-clients{position:relative}
+}
+
+/* ── TOUCH DEVICE OPTIMIZATIONS ─────────────────────────────── */
+@media (hover: none) and (pointer: coarse) {
+  /* Remove hover effects on touch devices */
+  .svc-card:hover,.hw:hover,.proj-card:hover{
+    transform:none;
+  }
+  
+  /* Make interactive elements larger for touch */
+  .nav-cta{padding:10px 24px}
+  .btn-lime,.btn-ghost{padding:14px 32px}
+  .faq-q{padding:20px 24px}
+  
+  .testi-track{animation-duration:60s}
+  .marquee-track{animation-duration:40s}
+}
+
+/* ── REDUCED MOTION ──────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important;
+  }
+}
+
 /* ── HOW-WE-WORK CARD — icon spin + amber border ────────────── */
 .hw{transition:background .3s,border-color .3s,transform .25s}
 .hw:hover{transform:translateY(-4px);border-color:rgba(255,107,53,.3)}
@@ -383,7 +652,7 @@ footer{background:#020208;padding:72px 52px 40px;border-top:1px solid var(--bord
     <li><a href="#projects">Our Work</a></li>
     <li><a href="#about">About us</a></li>
     <li><a href="#faq">FAQ</a></li>
-    <li><a href="#contact">Blog</a></li>
+    
   </ul>
   <a href="#contact" class="nav-cta">Contact Us</a>
 </nav>
@@ -395,7 +664,7 @@ footer{background:#020208;padding:72px 52px 40px;border-top:1px solid var(--bord
 
   <div class="hero-inner">
     <div class="hero-badge"><span class="hero-badge-dot"></span>Award-Winning Studio — Est. 2018</div>
-    <h1 class="hero-h1">Architecting AI amp;<br><span> AR/VR </span><br>& Scalable Games</h1>
+    <h1 class="hero-h1">Architecting AI <br><span> AR/VR </span><br>& Scalable Games</h1>
     <p class="hero-sub">We are a custom technology firm specializing in AR/VR development, XR ecosystems, AI & Metaverse integration, and Game Development. </p>
     <div class="hero-btns">
       <a href="#contact" class="btn-lime">Discuss your project &rarr;</a>
@@ -442,7 +711,7 @@ footer{background:#020208;padding:72px 52px 40px;border-top:1px solid var(--bord
           <svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="8" fill="#a855f7" opacity=".9"/><circle cx="7" cy="13" r="6" fill="#7c3aed" opacity=".7"/><circle cx="29" cy="13" r="6" fill="#7c3aed" opacity=".7"/><circle cx="7" cy="24" r="6" fill="#6d28d9" opacity=".55"/><circle cx="29" cy="24" r="6" fill="#6d28d9" opacity=".55"/></svg>
         </div>
         <h3 class="svc-name">Custom Software Development</h3>
-        <p class="svc-text">Tailored web and platform systems built around your business requirements. Web applications, internal systems, system integrations.</p>
+        <p class="svc-text">We architect bespoke, production-ready systems tailored to your specific operational logic and data requirements. From robust backend infrastructure to scalable application frameworks, we engineer high-performance solutions that integrate seamlessly with your existing tech stack and drive measurable business growth.</p>
         <span class="svc-link">Learn more &rarr;</span>
       </div>
       <!-- card 2 -->
@@ -509,11 +778,11 @@ footer{background:#020208;padding:72px 52px 40px;border-top:1px solid var(--bord
         <div class="sec-label">Our Project Expertise</div>
         <h2 class="sec-title">We thrive where conventional software reaches<br><span class="hl"> its technical limits.</span></h2>
         <div class="what-items">
-          <div class="what-item"><div class="what-dot"></div><span class="what-text">Custom application architecture and development</span></div>
-          <div class="what-item"><div class="what-dot"></div><span class="what-text">AI integration into existing systems</span></div>
-          <div class="what-item"><div class="what-dot"></div><span class="what-text">VR and AR applications for training, education, marketing and simulation</span></div>
-          <div class="what-item"><div class="what-dot"></div><span class="what-text">Interactive platforms requiring scalable infrastructure</span></div>
-          <div class="what-item"><div class="what-dot"></div><span class="what-text">Complex user experience and interaction design challenges</span></div>
+          <div class="what-item"><div class="what-dot"></div><span class="what-text">Developing bespoke application architectures for large-scale enterprise deployment.</span></div>
+          <div class="what-item"><div class="what-dot"></div><span class="what-text">Embedding sophisticated AI and machine learning models into legacy operational frameworks.</span></div>
+          <div class="what-item"><div class="what-dot"></div><span class="what-text">Constructing immersive AR and VR simulations for technical training and high-fidelity brand experiences</span></div>
+          <div class="what-item"><div class="what-dot"></div><span class="what-text">Architecting distributed, scalable infrastructure for persistent metaverse ecosystems.</span></div>
+          <div class="what-item"><div class="what-dot"></div><span class="what-text">Solving high-friction UI/UX challenges through advanced interaction design and sensor integration.</span></div>
         </div>
         <a href="#contact" class="btn-lime" style="margin-top:36px;display:inline-flex">Get in touch &rarr;</a>
       </div>
@@ -522,20 +791,21 @@ footer{background:#020208;padding:72px 52px 40px;border-top:1px solid var(--bord
           <div class="stat-num-big" data-count="45">0+</div>
           <div class="stat-meta">
             <div class="stat-label"> High-Impact Deployments</div>
-            <div class="stat-sub">Across AI systems, VR apps and custom software for international clients</div>
+            <div class="stat-sub">Successfully delivering custom-engineered solutions that redefine operational boundaries.</div>
           </div>
         </div>
         <div class="stat-card-row">
           <div class="stat-card rv-s">
             <div>
               <div class="stat-num-big" data-count="20">0+</div>
-              <div class="stat-label" style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.95rem;margin-top:4px">Awards</div>
+              <div class="stat-label" style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.95rem;margin-top:4px">Industry Honors</div>
+               <div class="stat-sub">Recognized for technical excellence and innovative contributions to the immersive tech landscape.</div>
             </div>
           </div>
           <div class="stat-card rv-s" style="flex-direction:column;align-items:flex-start;justify-content:center">
             <div class="stat-num-big">5.0</div>
-            <div class="stat-label" style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.95rem;margin-top:4px">Review Rating</div>
-            <div class="stat-sub" style="text-align:left;margin-left:0;margin-top:6px">Independent review score on Clutch</div>
+            <div class="stat-label" style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.95rem;margin-top:4px">Client Endorsement</div>
+            <div class="stat-sub" style="text-align:left;margin-left:0;margin-top:6px">A perfect track record of reliability and execution as verified by independent industry reviews.</div>
           </div>
         </div>
       </div>
@@ -551,7 +821,7 @@ footer{background:#020208;padding:72px 52px 40px;border-top:1px solid var(--bord
         <div class="sec-label rv">Our Work</div>
         <h2 class="sec-title rv">Selected <span class="hl">Projects</span></h2>
       </div>
-      <a href="#" class="btn-ghost rv">View all case studies &rarr;</a>
+      
     </div>
 
     <div class="proj-grid">
@@ -635,13 +905,14 @@ footer{background:#020208;padding:72px 52px 40px;border-top:1px solid var(--bord
     <div class="about-grid">
       <div>
         <div class="sec-label rv">About / What We Do</div>
-        <h2 class="sec-title rv">Our development<br><span class="hl">process</span></h2>
+        <h2 class="sec-title rv">Our Development <br><span class="hl">Roadmap</span></h2>
         <div class="process-steps">
-          <div class="ps rv"><span class="ps-num">01</span><div><div class="ps-name">Discovery and technical validation</div><div class="ps-desc">We audit your goals, constraints and technical environment before writing a single line of code.</div></div><div class="ps-bar"></div></div>
-          <div class="ps rv"><span class="ps-num">02</span><div><div class="ps-name">Architecture and UX planning</div><div class="ps-desc">System design, user flows and interface blueprints that anchor the entire build.</div></div><div class="ps-bar"></div></div>
-          <div class="ps rv"><span class="ps-num">03</span><div><div class="ps-name">Software development and integration</div><div class="ps-desc">Agile, iterative development cycles with constant transparency and communication.</div></div><div class="ps-bar"></div></div>
-          <div class="ps rv"><span class="ps-num">04</span><div><div class="ps-name">Testing and iteration</div><div class="ps-desc">Rigorous QA processes ensuring every deliverable meets production-grade standards.</div></div><div class="ps-bar"></div></div>
-          <div class="ps rv"><span class="ps-num">05</span><div><div class="ps-name">Deployment and long-term support</div><div class="ps-desc">Smooth rollout pipelines and ongoing maintenance to keep your product at peak performance.</div></div><div class="ps-bar"></div></div>
+          <div class="ps rv"><span class="ps-num">01</span><div><div class="ps-name">Strategic Discovery and Technical Auditing</div><div class="ps-desc">We perform a deep-dive analysis into your operational bottlenecks and hardware constraints to ensure the proposed AI or XR architecture aligns with your core business objectives.</div></div><div class="ps-bar"></div></div>
+          <div class="ps rv"><span class="ps-num">02</span><div><div class="ps-name"> Spatial Architecture and Logic Prototyping</div><div class="ps-desc">Our team designs high-fidelity wireframes and interaction models that define how users will navigate complex 3D environments or engage with autonomous AI interfaces.
+</div></div><div class="ps-bar"></div></div>
+          <div class="ps rv"><span class="ps-num">03</span><div><div class="ps-name"> Full-Stack Development and Neural Integration</div><div class="ps-desc">We execute iterative, sprint-based cycles to build out the core mechanics of your AR, VR, or Metaverse application, ensuring seamless integration with your existing technical stack.</div></div><div class="ps-bar"></div></div>
+          <div class="ps rv"><span class="ps-num">04</span><div><div class="ps-name">Stress Testing and Quality Assurance</div><div class="ps-desc">Every deliverable undergoes exhaustive performance auditing and bug-tracking to ensure the software remains resilient under heavy industrial or enterprise-grade workloads.</div></div><div class="ps-bar"></div></div>
+          <div class="ps rv"><span class="ps-num">05</span><div><div class="ps-name">Scaled Deployment and Continuous Optimization</div><div class="ps-desc">We manage the smooth rollout of your digital infrastructure and provide persistent support to maintain peak performance and incorporate the latest technological updates.</div></div><div class="ps-bar"></div></div>
         </div>
       </div>
 
@@ -649,20 +920,20 @@ footer{background:#020208;padding:72px 52px 40px;border-top:1px solid var(--bord
         <div class="caps-card rv-s">
           <div class="new-badge"><span class="new-dot"></span>New — Latest Innovations</div>
           <h3 class="caps-title">Core technical capabilities</h3>
-          <p class="caps-sub">We combine software engineering, AI integration and immersive technologies to build scalable, production-ready systems.</p>
+          <p class="caps-sub">Infinity combines advanced computer vision, spatial computing, and machine learning to build production-ready digital ecosystems.</p>
           <ul class="caps-list">
-            <li>Custom backend and cloud-based system architecture</li>
-            <li>AI integration and automation workflows</li>
-            <li>Real-time 3D and immersive application development</li>
-            <li>API integrations and enterprise system interoperability</li>
-            <li>Performance optimization and scalable infrastructure</li>
+            <li>Custom XR Frameworks</li>
+            <li>AI Implementation</li>
+            <li>High-Fidelity 3D Engines</li>
+            <li>System Interoperability</li>
+            <li>Performance Engineering</li>
           </ul>
         </div>
         <div class="awards-row">
-          <div class="award-box rv-s"><div class="award-rank">No. 1</div><div class="award-name">Best AR/VR Company 2024 — Tech Times</div></div>
-          <div class="award-box rv-s"><div class="award-rank">Top 3</div><div class="award-name">AR/VR Developers in UK — Clutch</div></div>
-          <div class="award-box rv-s"><div class="award-rank">No. 1</div><div class="award-name">Best Metaverse Agency — P2P Marketing</div></div>
-          <div class="award-box rv-s"><div class="award-rank">2024</div><div class="award-name">Best Enterprise VR — AIXR Nominee</div></div>
+          <div class="award-box rv-s"><div class="award-rank">No. 1</div><div class="award-name">Premier AR/VR Development Firm</div></div>
+          <div class="award-box rv-s"><div class="award-rank">Top Tier</div><div class="award-name">Global Excellence in Spatial Computing</div></div>
+          <div class="award-box rv-s"><div class="award-rank">Leading Agency</div><div class="award-name"> Advanced AI & Metaverse Architects</div></div>
+          <div class="award-box rv-s"><div class="award-rank">2025</div><div class="award-name">Innovation Leader in Immersive Tech</div></div>
         </div>
       </div>
     </div>
@@ -674,52 +945,39 @@ footer{background:#020208;padding:72px 52px 40px;border-top:1px solid var(--bord
   <div class="inner">
     <div class="process-head">
       <div class="sec-label rv">How We Work</div>
-      <h2 class="sec-title rv">How we do <span class="hl">things</span></h2>
-      <p style="color:var(--muted);max-width:500px;margin:18px auto 0;font-size:.94rem;line-height:1.75" class="rv">Our unique combination of consulting, art and development expertise allows us to simplify complex development projects.</p>
+      <h2 class="sec-title rv">How we <span class="hl">Execute</span></h2>
+      <p style="color:var(--muted);max-width:500px;margin:18px auto 0;font-size:.94rem;line-height:1.75" class="rv">This specialized workflow allows us to dismantle complex development hurdles and deploy seamless digital ecosystems.</p>
     </div>
 
     <div class="hw-grid">
-      <div class="hw rv"><div class="hw-n">01</div><div class="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div class="hw-name">Initial Scoping</div><p class="hw-text">Expert design thinking sessions to understand your needs and business objectives in depth.</p><div class="hw-underline"></div></div>
-      <div class="hw rv"><div class="hw-n">02</div><div class="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg></div><div class="hw-name">Planning & Kick Off</div><p class="hw-text">Defining and planning every detail — timelines, resources and technical requirements.</p><div class="hw-underline"></div></div>
-      <div class="hw rv"><div class="hw-n">03</div><div class="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div class="hw-name">Design</div><p class="hw-text">Turning the concept into a designed experience ready to be developed and approved.</p><div class="hw-underline"></div></div>
-      <div class="hw rv"><div class="hw-n">04</div><div class="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><div class="hw-name">Development</div><p class="hw-text">Implementing the features in the technology selected for the project with regular check-ins.</p><div class="hw-underline"></div></div>
+      <div class="hw rv"><div class="hw-n">01</div><div class="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div class="hw-name">Strategic Analysis</div><p class="hw-text">We conduct intensive technical validation sessions to align our AI and XR development capabilities with your specific enterprise goals and operational constraints.</p><div class="hw-underline"></div></div>
+      <div class="hw rv"><div class="hw-n">02</div><div class="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg></div><div class="hw-name"> Technical Roadmap</div><p class="hw-text">Defining the architectural blueprints—establishing precise timelines, resource allocation, and the core technology stack required for your custom build.</p><div class="hw-underline"></div></div>
+      <div class="hw rv"><div class="hw-n">03</div><div class="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div class="hw-name">Spatial Architecture</div><p class="hw-text">Translating conceptual logic into high-fidelity interaction models and 3D wireframes ready for hardware integration and stakeholder approval.</p><div class="hw-underline"></div></div>
+      <div class="hw rv"><div class="hw-n">04</div><div class="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><div class="hw-name">Core Engineering</div><p class="hw-text">Implementing sophisticated features using the selected high-performance engines, supported by constant transparency and iterative progress tracking.</p><div class="hw-underline"></div></div>
     </div>
     <div class="hw-grid-2">
-      <div class="hw rv"><div class="hw-n">05</div><div class="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div class="hw-name">Testing</div><p class="hw-text">Ensuring a seamless, smooth experience across all target platforms and devices.</p><div class="hw-underline"></div></div>
-      <div class="hw rv"><div class="hw-n">06</div><div class="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="7.5 4.21 12 6.81 16.5 4.21"/><polyline points="7.5 19.79 7.5 14.6 3 12"/><polyline points="21 12 16.5 14.6 16.5 19.79"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div><div class="hw-name">Deployment</div><p class="hw-text">Staging versions for your review before production releases go live to the world.</p><div class="hw-underline"></div></div>
-      <div class="hw rv"><div class="hw-n">07</div><div class="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div><div class="hw-name">Final Release</div><p class="hw-text">After sign-off from your side, a clean production release ready to launch.</p><div class="hw-underline"></div></div>
-      <div class="hw rv"><div class="hw-n">08</div><div class="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m5.08 5.08l4.24 4.24M1 12h6m6 0h6M4.22 19.78l4.24-4.24m5.08-5.08l4.24-4.24"/></svg></div><div class="hw-name">Maintenance</div><p class="hw-text">Ongoing support to keep you satisfied and your product running at its best.</p><div class="hw-underline"></div></div>
+      <div class="hw rv"><div class="hw-n">05</div><div class="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div class="hw-name">Stress Testing</div><p class="hw-text">Subjecting the software to rigorous QA protocols to ensure absolute stability and performance across all target hardware, from VR headsets to mobile interfaces.</p><div class="hw-underline"></div></div>
+      <div class="hw rv"><div class="hw-n">06</div><div class="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="7.5 4.21 12 6.81 16.5 4.21"/><polyline points="7.5 19.79 7.5 14.6 3 12"/><polyline points="21 12 16.5 14.6 16.5 19.79"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div><div class="hw-name"> Staged Rollout</div><p class="hw-text">Deploying stable builds to secure staging environments for final user-acceptance testing before moving toward a full-scale production launch.</p><div class="hw-underline"></div></div>
+      <div class="hw rv"><div class="hw-n">07</div><div class="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div><div class="hw-name"> Production Deployment</div><p class="hw-text">Once the build is verified, we execute the final release, integrating the new digital infrastructure into your live operational environment.</p><div class="hw-underline"></div></div>
+      <div class="hw rv"><div class="hw-n">08</div><div class="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m5.08 5.08l4.24 4.24M1 12h6m6 0h6M4.22 19.78l4.24-4.24m5.08-5.08l4.24-4.24"/></svg></div><div class="hw-name"> System Optimization</div><p class="hw-text">Providing persistent technical support and performance monitoring to ensure your software remains at the cutting edge as technology and hardware evolve.</p><div class="hw-underline"></div></div>
     </div>
   </div>
 </section>
-
 <!-- ─── TESTIMONIALS ───────────────────────────────────────────── -->
 <section id="testimonials">
   <div class="inner">
     <div class="testi-head">
       <div class="sec-label rv">Client Reviews</div>
-      <h2 class="sec-title rv">What our clients <span class="hl">say</span></h2>
+      <h2 class="sec-title rv">Industry<span class="hl">Feedback</span></h2>
     </div>
   </div>
   <div class="testi-track-wrap">
-    <div class="testi-track">
-      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">I could not be more pleased with how responsive, engaged, and easy to work with their team was.</p><div class="testi-author">Ryan Mallet</div><div class="testi-role">Senior Marketing Manager, Microsoft</div></div>
-      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">Takeaway Reality has outperformed and exceeded expectations; they developed a usable demo in three months, on time and within budget.</p><div class="testi-author">Ennio Armato</div><div class="testi-role">CEO, FFIND</div></div>
-      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">The team is accessible 24/7 and I am so impressed by the work they deliver.</p><div class="testi-author">Marie-Laure De Veyt</div><div class="testi-role">Senior Marketing Manager, Microsoft</div></div>
-      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">Releases were well planned, well organized, and well documented, so I always knew where project development was.</p><div class="testi-author">Johnny Kois</div><div class="testi-role">CEO, Kois Center</div></div>
-      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">They always provide exceptional service and delivery, regardless of the project size.</p><div class="testi-author">Karine Kukovica</div><div class="testi-role">Senior Manager, Cinco</div></div>
-      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">TAR makes it very easy for clients to understand the technology and proactively suggests directions.</p><div class="testi-author">Tin Saric</div><div class="testi-role">Founder & COO, Bitx</div></div>
-      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">Their dedication to not only deliver the solution but optimize the overall VR experience was extraordinary.</p><div class="testi-author">Erik Matosevic</div><div class="testi-role">Founder & CEO, Orion Labs</div></div>
-      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">What impressed me the most was the motivation and passion the TAR team showed during our VR project.</p><div class="testi-author">Sam Beni</div><div class="testi-role">Founder & CEO, Platin</div></div>
-      <!-- duplicate for loop -->
-      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">I could not be more pleased with how responsive, engaged, and easy to work with their team was.</p><div class="testi-author">Ryan Mallet</div><div class="testi-role">Senior Marketing Manager, Microsoft</div></div>
-      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">Takeaway Reality has outperformed and exceeded expectations; they developed a usable demo in three months, on time and within budget.</p><div class="testi-author">Ennio Armato</div><div class="testi-role">CEO, FFIND</div></div>
-      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">The team is accessible 24/7 and I am so impressed by the work they deliver.</p><div class="testi-author">Marie-Laure De Veyt</div><div class="testi-role">Senior Marketing Manager, Microsoft</div></div>
-      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">Releases were well planned, well organized, and well documented, so I always knew where project development was.</p><div class="testi-author">Johnny Kois</div><div class="testi-role">CEO, Kois Center</div></div>
-      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">They always provide exceptional service and delivery, regardless of the project size.</p><div class="testi-author">Karine Kukovica</div><div class="testi-role">Senior Manager, Cinco</div></div>
-      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">TAR makes it very easy for clients to understand the technology and proactively suggests directions.</p><div class="testi-author">Tin Saric</div><div class="testi-role">Founder & COO, Bitx</div></div>
-      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">Their dedication to not only deliver the solution but optimize the overall VR experience was extraordinary.</p><div class="testi-author">Erik Matosevic</div><div class="testi-role">Founder & CEO, Orion Labs</div></div>
-      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">What impressed me the most was the motivation and passion the TAR team showed during our VR project.</p><div class="testi-author">Sam Beni</div><div class="testi-role">Founder & CEO, Platin</div></div>
+    <div class="testi-track" id="testiTrack">
+      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">The deployment schedule was meticulous and transparent. We maintained a precise understanding of the architectural progress at every stage of the build.</p><div class="testi-author">Arjun M.</div></div>
+      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">Infinity provides an uncompromising level of technical execution. Their ability to deliver complex spatial solutions regardless of project scale is remarkable.</p><div class="testi-author">Sarah L.</div></div>
+      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">They bridged the gap between theoretical AI and operational reality, proactively identifying technical optimizations that drastically improved our workflow.</p><div class="testi-author">Vikram S.</div></div>
+      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">The technical precision involved in optimizing our VR simulation was exceptional. They didn't just deliver a tool; they engineered a high-performance training ecosystem.</p><div class="testi-author">Elena R.</div></div>
+      <div class="testi-card"><div class="testi-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><p class="testi-quote">Their deep understanding of immersive tech mechanics and high-fidelity rendering sets a new benchmark for what we expect from a development partner.</p><div class="testi-author">David K.</div></div>
     </div>
   </div>
 </section>
@@ -730,14 +988,14 @@ footer{background:#020208;padding:72px 52px 40px;border-top:1px solid var(--bord
     <div class="awards-label">
       <div class="sec-label rv" style="justify-content:center"><span style="width:20px;height:1px;background:var(--muted);display:block"></span>Recognition<span style="width:20px;height:1px;background:var(--muted);display:block"></span></div>
       <h2 class="sec-title rv" style="text-align:center">Global leaders in <span class="hl">Spatial Computing</span></h2>
-      <p style="color:var(--muted);font-size:.92rem;margin-top:12px;text-align:center" class="rv">Consistently ranking among the top 10 global metaverse AR and VR developers.</p>
+      <p style="color:var(--muted);font-size:.92rem;margin-top:12px;text-align:center" class="rv">Infinity is recognized globally for engineering high-integrity spatial solutions and AI architectures that bridge the gap between conceptual technology and operational reality.</p>
     </div>
     <div class="awards-grid">
-      <div class="award-pill rv"><div class="award-pill-rank">No. 1</div><div class="award-pill-name">Best AR/VR Development Company</div><div class="award-pill-src">Tech Times</div></div>
-      <div class="award-pill rv"><div class="award-pill-rank">No. 1</div><div class="award-pill-name">Best AR/VR Development Agency 2023</div><div class="award-pill-src">DesignRush</div></div>
-      <div class="award-pill rv"><div class="award-pill-rank">2024</div><div class="award-pill-name">Best Enterprise VR Solution Nominee</div><div class="award-pill-src">AIXR Awards</div></div>
-      <div class="award-pill rv"><div class="award-pill-rank">No. 1</div><div class="award-pill-name">World's Best Metaverse Agency</div><div class="award-pill-src">P2P Marketing</div></div>
-      <div class="award-pill rv"><div class="award-pill-rank">Top 5</div><div class="award-pill-name">AR/VR Developers in the UK</div><div class="award-pill-src">The Manifest</div></div>
+      <div class="award-pill rv"><div class="award-pill-rank">No. 1</div><div class="award-pill-name"> Enterprise AR/VR Architecture</div><div class="award-pill-src"></div></div>
+      <div class="award-pill rv"><div class="award-pill-rank">Global Top 10 </div><div class="award-pill-name">Metaverse Infrastructure</div><div class="award-pill-src"></div></div>
+      <div class="award-pill rv"><div class="award-pill-rank">2025 Innovation Leader</div><div class="award-pill-name"> XR Spatial Computing </div><div class="award-pill-src"></div></div>
+     
+      <div class="award-pill rv"><div class="award-pill-rank">Top 5</div><div class="award-pill-name">Custom Software Engineering </div><div class="award-pill-src"></div></div>
     </div>
   </div>
 </section>
@@ -819,51 +1077,45 @@ footer{background:#020208;padding:72px 52px 40px;border-top:1px solid var(--bord
   <div class="footer-wrap">
     <div class="footer-top">
       <div>
-        <div class="f-brand">TAR</div>
-        <p class="f-tagline">An award-winning AR, VR and AI development agency working with the world's largest brands and ambitious startups.</p>
+        <div class="f-brand">Infinity Productions</div>
+        <p class="f-tagline">We are a custom technology firm specializing in AR/VR development, XR ecosystems, AI & Metaverse integration, and Game Development.</p>
         <div class="f-socials">
-          <a href="https://x.com/tar_metaverse" class="f-social">Tw</a>
-          <a href="http://instagram.com/takeaway_reality" class="f-social">Ig</a>
-          <a href="https://www.linkedin.com/company/takeaway-reality" class="f-social">Li</a>
-          <a href="https://www.youtube.com/@TAR-TV" class="f-social">Yt</a>
+          <a href="" class="f-social">Tw</a>
+          <a href="" class="f-social">Ig</a>
+          <a href="" class="f-social">Li</a>
+          <a href="" class="f-social">Yt</a>
         </div>
       </div>
       <div>
         <div class="f-col-title">Services</div>
         <div class="f-links">
-          <a href="#">Custom Software</a>
-          <a href="#">AI Development</a>
-          <a href="#">VR Development</a>
-          <a href="#">AR Development</a>
-          <a href="#">Roblox Development</a>
-          <a href="#">Enterprise Apps</a>
+          
+          <a href="#services">AI Development</a>
+          <a href="#services">VR Development</a>
+          <a href="#services">AR Development</a>
+          <a href="#services">Game Development</a>
+          <a href="#services">XR Development</a>
         </div>
       </div>
       <div>
-        <div class="f-col-title">Company</div>
-        <div class="f-links">
-          <a href="#">About Us</a>
-          <a href="#">Our Work</a>
-          <a href="#">Blog</a>
-          <a href="#">FAQ</a>
-          <a href="#">VR for Events</a>
-        </div>
+      
       </div>
       <div>
         <div class="f-col-title">Get in Touch</div>
         <div class="f-links">
-          <a href="#">Start a Project</a>
-          <a href="#">Free Consulting Call</a>
-          <a href="#">Clutch Reviews</a>
-          <a href="#">Privacy Policy</a>
+          <a href="#contact">Start a Project</a>
+          <a href="#services">Services</a>
+          <a href="#projects">Our Work</a>
+          <a href="#about">About us</a>
+          <a href="#faq">FAQ</a>
+    
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <div class="f-copy">2026 Takeaway Reality Ltd. All rights reserved.</div>
+      <div class="f-copy">2026 Infinity Productions Ltd. All rights reserved.</div>
       <div class="f-legal">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Cookie Settings</a>
+        
       </div>
     </div>
   </div>
@@ -1079,6 +1331,29 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
     submitBtn.textContent = originalText;
   }
 });
+
+// ── TESTIMONIAL INFINITE SCROLL ─────────────────────────────
+(function(){
+  const track = document.getElementById('testiTrack');
+  if(!track) return;
+  const cards = Array.from(track.children);
+  cards.forEach(c => track.appendChild(c.cloneNode(true)));
+  let x = 0;
+  const speed = 0.5;
+  let paused = false;
+  track.addEventListener('mouseenter', () => paused = true);
+  track.addEventListener('mouseleave', () => paused = false);
+  function tick(){
+    if(!paused){
+      x -= speed;
+      const half = track.scrollWidth / 2;
+      if(Math.abs(x) >= half) x = 0;
+      track.style.transform = 'translateX(' + x + 'px)';
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
 
 // ── SERVICE CARD 3D TILT ──────────────────────────────────────
 document.querySelectorAll('.svc-card').forEach(card=>{
