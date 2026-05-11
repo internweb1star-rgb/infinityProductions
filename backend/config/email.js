@@ -1,15 +1,12 @@
 const nodemailer = require('nodemailer');
 
-// Create transporter with Gmail OAuth2
+// Create transporter with Gmail App Password
 const createTransporter = () => {
   return nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      type: 'OAuth2',
-      user: process.env.GMAIL_USER,
-      clientId: process.env.GMAIL_CLIENT_ID,
-      clientSecret: process.env.GMAIL_CLIENT_SECRET,
-      refreshToken: process.env.GMAIL_REFRESH_TOKEN
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
     }
   });
 };
@@ -24,7 +21,7 @@ const sendContactEmail = async (contactData) => {
     console.log('✓ Email server is ready to send messages');
 
     const mailOptions = {
-      from: `"${contactData.name}" <${process.env.EMAIL_FROM}>`,
+      from: `"${contactData.name}" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_TO,
       replyTo: contactData.email,
       subject: `New Contact Form Submission from ${contactData.name}`,

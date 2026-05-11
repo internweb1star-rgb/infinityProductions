@@ -1329,7 +1329,12 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
       body: JSON.stringify(formData)
     });
     
-    const data = await response.json();
+    let data;
+    try {
+      data = await response.json();
+    } catch (e) {
+      throw new Error('Server returned an invalid response');
+    }
     
     if (response.ok) {
       formMessage.style.color = '#4ade80';
@@ -1340,7 +1345,9 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
       if (data.errors && Array.isArray(data.errors)) {
         formMessage.textContent = '✗ ' + data.errors.join(', ');
       } else {
-        formMessage.textContent = '✗ ' + (data.message || 'Failed to send message');
+        // Safely handle message if it's an object or string
+        const msg = typeof data.message === 'string' ? data.message : JSON.stringify(data.message);
+        formMessage.textContent = '✗ ' + (msg || 'Failed to send message');
       }
     }
   } catch (error) {

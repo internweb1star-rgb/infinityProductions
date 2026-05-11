@@ -61,13 +61,13 @@ router.post('/', contactValidation, async (req, res) => {
     await contact.save();
     console.log('✓ Contact saved to database:', contact._id);
 
-    // Send email notification
-    try {
-      await sendContactEmail({ name, email, company, message });
-    } catch (emailError) {
-      console.error('Email sending failed, but contact was saved:', emailError);
-      // Continue even if email fails - contact is saved in DB
-    }
+    // Send email notification - Non-blocking (Asynchronous)
+    // This allows the user to get a success message immediately without waiting for the email to send
+    sendContactEmail({ name, email, company, message })
+      .then(() => console.log('✓ Email notification sent successfully'))
+      .catch(emailError => {
+        console.error('✗ Email notification failed (check your .env credentials):', emailError.message);
+      });
 
     res.status(201).json({
       success: true,
