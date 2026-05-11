@@ -24,7 +24,7 @@ const contactValidation = [
   body('message')
     .trim()
     .notEmpty().withMessage('Message is required')
-    .isLength({ min: 10, max: 2000 }).withMessage('Message must be between 10 and 2000 characters')
+    .isLength({ min: 1, max: 2000 }).withMessage('Message must be between 1 and 2000 characters')
     .escape()
 ];
 
@@ -34,10 +34,11 @@ router.post('/', contactValidation, async (req, res) => {
     // Check validation errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      console.log('✗ Validation failed:', errors.array());
       return res.status(400).json({
         success: false,
         message: 'Validation failed',
-        errors: errors.array()
+        errors: errors.array().map(err => err.msg)
       });
     }
 

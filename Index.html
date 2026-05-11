@@ -398,6 +398,7 @@ footer{background:#020208;padding:72px 52px 40px;border-top:1px solid var(--bord
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   .nav-logo{font-size:1.25rem}
 =======
   .nav-logo{font-size:1.1rem}
@@ -408,6 +409,9 @@ footer{background:#020208;padding:72px 52px 40px;border-top:1px solid var(--bord
 =======
   .nav-logo{font-size:1.1rem}
 >>>>>>> 706b8da1cdf58a3c3c284e796ea149ab1376d2aa
+=======
+  .nav-logo{font-size:1.25rem}
+>>>>>>> b2931ecaec1670f23a087951f31529717d44f032
   .nav-links{display:none}
   .nav-cta{padding:8px 18px;font-size:.8rem}
   
@@ -1333,7 +1337,11 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
       e.target.reset();
     } else {
       formMessage.style.color = '#f87171';
-      formMessage.textContent = '✗ ' + (data.message || 'Failed to send message');
+      if (data.errors && Array.isArray(data.errors)) {
+        formMessage.textContent = '✗ ' + data.errors.join(', ');
+      } else {
+        formMessage.textContent = '✗ ' + (data.message || 'Failed to send message');
+      }
     }
   } catch (error) {
     formMessage.style.color = '#f87171';
