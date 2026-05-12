@@ -28,6 +28,7 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.65;overflow-x:hidden}
+body.no-scroll{overflow:hidden}
 a{text-decoration:none;color:inherit}
 ul{list-style:none}
 img{display:block;max-width:100%}
@@ -43,10 +44,18 @@ nav.scrolled{background:rgba(6,6,15,.88);backdrop-filter:blur(14px);border-botto
 .nav-logo-dot{width:7px;height:7px;background:var(--lime);border-radius:50%;display:inline-block;animation:blink 2.2s infinite}
 @keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.75)}}
 .nav-links{display:flex;gap:34px}
+.mobile-only{display:none}
 .nav-links a{font-size:.84rem;font-weight:500;color:var(--muted);letter-spacing:.01em;transition:color .2s}
 .nav-links a:hover{color:var(--text)}
 .nav-cta{background:var(--lime);color:#000;padding:9px 22px;border-radius:100px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.84rem;transition:transform .2s,box-shadow .25s}
 .nav-cta:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(255,107,53,.28)}
+
+.nav-right{display:flex;align-items:center;gap:15px}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:5px;z-index:1000}
+.burger span{display:block;width:24px;height:2px;background:var(--lime);transition:0.3s}
+.burger.active span:nth-child(1){transform:rotate(45deg) translate(5px, 5px)}
+.burger.active span:nth-child(2){opacity:0}
+.burger.active span:nth-child(3){transform:rotate(-45deg) translate(5px, -5px)}
 
 /* ── HERO ────────────────────────────────────────────────────── */
 #hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 48px 100px;position:relative;overflow:hidden;background:#0d0800}
@@ -395,25 +404,26 @@ footer{background:#020208;padding:72px 52px 40px;border-top:1px solid var(--bord
 @media (max-width: 768px) {
   /* Navigation */
   nav{padding:14px 20px;flex-wrap:wrap;gap:12px}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-  .nav-logo{font-size:1.25rem}
-=======
   .nav-logo{font-size:1.1rem}
->>>>>>> 706b8da1cdf58a3c3c284e796ea149ab1376d2aa
-=======
-  .nav-logo{font-size:1.1rem}
->>>>>>> 706b8da1cdf58a3c3c284e796ea149ab1376d2aa
-=======
-  .nav-logo{font-size:1.1rem}
->>>>>>> 706b8da1cdf58a3c3c284e796ea149ab1376d2aa
-=======
-  .nav-logo{font-size:1.25rem}
->>>>>>> b2931ecaec1670f23a087951f31529717d44f032
-  .nav-links{display:none}
-  .nav-cta{padding:8px 18px;font-size:.8rem}
+  .nav-logo-img{height:100%}
+  .burger{display:flex}
+  .nav-links{
+    position:fixed;top:0;right:-100%;width:70%;height:100vh;
+    background:var(--surface);flex-direction:column;align-items:center;justify-content:center;
+    gap:40px;transition:0.4s cubic-bezier(0.77,0.2,0.05,1.0);z-index:999;
+    border-left:1px solid var(--border);
+  }
+  .nav-links.active{right:0}
+  .nav-links a{font-size:1.4rem;font-weight:700;color:var(--text);font-family:'Space Grotesk',sans-serif}
+  .mobile-only{display:block;margin-top:20px;width:80%}
+  .mobile-only a{
+    background:var(--lime);color:#000;padding:12px 32px;
+    border-radius:100px;font-size:1.1rem;text-align:center;
+    display: block;
+    width: 100%;
+    font-weight: 700;
+  }
+  .nav-cta{display:none}
   
   /* Hero */
   #hero{padding:100px 24px 80px;min-height:90vh}
@@ -668,9 +678,16 @@ footer{background:#020208;padding:72px 52px 40px;border-top:1px solid var(--bord
     <li><a href="#projects">Our Work</a></li>
     <li><a href="#about">About us</a></li>
     <li><a href="#faq">FAQ</a></li>
-    
+    <li class="mobile-only"><a href="#contact">Contact Us</a></li>
   </ul>
-  <a href="#contact" class="nav-cta">Contact Us</a>
+  <div class="nav-right">
+    <a href="#contact" class="nav-cta">Contact Us</a>
+    <button class="burger" id="burger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
 </nav>
 
 <!-- ─── HERO ──────────────────────────────────────────────────── -->
@@ -1454,6 +1471,36 @@ document.querySelectorAll('.hw-icon svg').forEach(svg=>{
     });
   });
 });
+
+// ── BURGER MENU TOGGLE ────────────────────────────────────────
+const burger = document.getElementById('burger');
+const navLinks = document.querySelector('.nav-links');
+const navItems = document.querySelectorAll('.nav-links a');
+
+if(burger && navLinks) {
+  const toggleMenu = () => {
+    const isActive = navLinks.classList.toggle('active');
+    burger.classList.toggle('active');
+    document.body.classList.toggle('no-scroll');
+
+    if(isActive) {
+      gsap.fromTo('.nav-links li', 
+        { opacity: 0, x: 20 }, 
+        { opacity: 1, x: 0, duration: 0.4, stagger: 0.1, ease: 'power2.out', delay: 0.2 }
+      );
+    }
+  };
+
+  burger.addEventListener('click', toggleMenu);
+
+  navItems.forEach(item => {
+    item.addEventListener('click', () => {
+      burger.classList.remove('active');
+      navLinks.classList.remove('active');
+      document.body.classList.remove('no-scroll');
+    });
+  });
+}
 </script>
 </body>
 </html>
