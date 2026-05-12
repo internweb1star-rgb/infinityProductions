@@ -1341,7 +1341,7 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
   const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
   const API_URL = isLocal 
     ? 'http://localhost:5000/api/contact'
-    : 'https://infinityproductions.info/api/contact';
+    : `${window.location.origin}/api/contact`;
 
   console.log('Form submission target:', API_URL);
 
@@ -1376,6 +1376,7 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
       }
     }
   } catch (error) {
+    console.error('Contact form submit failed:', error);
     formMessage.style.color = '#f87171';
     formMessage.textContent = '✗ Network error. Please try again.';
   } finally {
