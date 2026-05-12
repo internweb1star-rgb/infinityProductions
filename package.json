@@ -1,0 +1,9 @@
+{
+  "name": "infinity-productions-root",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npm run dev --prefix backend",
+    "start": "npm start --prefix backend",
+    "setup": "npm run setup --prefix backend"
+  }
+}

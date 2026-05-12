@@ -1336,9 +1336,17 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
     company: document.getElementById('company').value,
     message: document.getElementById('message').value
   };
-  
+
+  // Determine API URL based on environment
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const API_URL = isLocal 
+    ? 'http://localhost:5000/api/contact'
+    : 'https://infinityproductions.info/api/contact';
+
+  console.log('Form submission target:', API_URL);
+
   try {
-    const response = await fetch('http://localhost:5000/api/contact', {
+    const response = await fetch(API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
